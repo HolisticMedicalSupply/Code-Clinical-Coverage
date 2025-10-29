@@ -1,8 +1,8 @@
 # Data Integrity Policy for Clinical Coverage Reference
 
-**Version:** 1.1
+**Version:** 1.2
 **Effective Date:** 2025-10-29
-**Last Updated:** 2025-10-29 (simplified tagging system)
+**Last Updated:** 2025-10-29 (added narrative Markdown tagging guidance)
 **Purpose:** Ensure accuracy and reliability of clinical coverage documentation for medical prescribers
 
 ---
@@ -141,6 +141,140 @@ special_notes: "Coverage details require verification with payer"
 **Quality Check:** Do I have any reliable basis for this?
 - ✅ No → Leave blank or mark Unknown
 - ❌ I could guess → Still Tier 4, don't guess
+
+---
+
+## 📝 Tagging Narrative Markdown Content
+
+**IMPORTANT:** Data integrity tags apply to **both YAML frontmatter AND narrative Markdown sections**. All information in the file will be displayed to physicians in the HTML catalog and must be tagged for legal protection and accuracy.
+
+### Where to Apply Tags in Narrative
+
+Tags should be applied to **specific claims, requirements, or statements** in these sections:
+
+1. **Clinical Overview** - Coverage criteria, typical use cases
+2. **Coverage Details** (Medicare/Medicaid sections) - Requirements, documentation needs, frequency
+3. **Documentation Requirements** - Specific prescription elements
+4. **Common Denial Reasons** - Specific reasons and fixes
+5. **Tips for Approval** - Suggested strategies or requirements
+6. **Important Notes** - Any coverage claims or requirements
+
+### What to Tag
+
+**Tag these types of statements:**
+- Specific requirements not explicit in source ("Typically requires..." "Generally limited to...")
+- Documentation needs inferred from patterns ("Standard written order required")
+- Frequency/quantity claims ("Typically limited to 1 per 12 months")
+- Coverage criteria synthesis ("Patient must meet E0163 criteria first")
+- Approval tips based on inference ("Best practice is...")
+- Common denial reasons if inferred ("May be denied if...")
+
+**Don't tag these:**
+- Direct quotes from source documents
+- Factual descriptions ("This is a bedpan made of plastic")
+- Item names and basic definitions
+- Structural headings
+- References to other sections ("See E0163 for details")
+
+### How to Apply Tags
+
+**Use inline parenthetical tags immediately after the statement:**
+
+```markdown
+**Documentation Requirements:**
+- Physician prescription required *(Under Review - High Confidence)*
+- Document bed-confined status in medical record
+- Standard Written Order (SWO) required
+- Proof of delivery required
+- Typically limited to 1 per 12 months *(Under Review - High Confidence)*
+```
+
+**Or after full sentences:**
+
+```markdown
+Medicare considers footrests as not primarily medical in nature. *(Under Review - High Confidence)* Considered convenience/comfort item. *(Under Review - High Confidence)* No reimbursement available under Medicare.
+```
+
+**Or inline within sentences for specific claims:**
+
+```markdown
+Patient must be bed-confined or room-confined *(Under Review - High Confidence)* and physically unable to utilize commode or regular toilet facilities.
+```
+
+### Markdown Tagging Examples by Section
+
+#### Clinical Overview:
+```markdown
+## Clinical Overview
+
+A standard commode is for patients confined to a single room or level without toilet facilities. This is **rarely covered** *(Under Review - High Confidence)* due to strict confinement requirements. Patients who can ambulate to bathroom should use regular toilet facilities.
+```
+
+#### Coverage Details:
+```markdown
+### Medicare Coverage Criteria
+
+**Clinical Requirements:**
+- Patient is confined to room, level, or home without toilet facilities
+- Physically incapable of using regular toilet
+- Medical necessity for toileting equipment *(Under Review - High Confidence)*
+
+**Documentation Requirements:**
+- Detailed Written Order (DWO) required
+- Must document confinement status *(Under Review - High Confidence)*
+- Face-to-face encounter within 6 months *(Under Review)*
+- Proof of delivery required
+```
+
+#### Tips for Approval:
+```markdown
+## Tips for Approval
+
+**Medicare:**
+- Be very specific about confinement *(Under Review - High Confidence)*
+- Best case scenario for approval: *(Under Review)*
+  - Patient confined to one level (upstairs bedroom) without toilet on that level
+  - Patient has severe arthritis preventing stair climbing
+- Include detailed explanation of living situation *(Under Review - High Confidence)*
+```
+
+#### Common Denial Reasons:
+```markdown
+## Common Denial Reasons
+
+1. **"Not medically necessary"** - Patient not sufficiently confined. Fix: Document specific confinement with medical reason. *(Under Review - High Confidence)*
+
+2. **"Patient ambulatory"** - Patient can walk to bathroom. Fix: Explain why distance/stairs/barriers prevent toilet access even though patient can walk short distances. *(Under Review)*
+```
+
+### Comprehensive Field Notes for Narrative
+
+All narrative tags must have corresponding entries in `data_quality.field_notes`:
+
+```yaml
+data_quality:
+  field_notes:
+    # YAML frontmatter notes
+    prior_auth_medicare: "Not mentioned in source; inferred from absence (typical for standard DME)"
+
+    # Narrative section notes
+    narrative_frequency_claim: "Clinical Overview states 'typically 1 per 12 months' - inferred from standard replacement cycle, not explicit in source"
+    narrative_confinement_requirement: "Coverage Details emphasize confinement requirement - synthesized from multiple source statements about room/level confinement"
+    narrative_denial_reasons: "Common denial reasons section based on typical denial patterns for DME, not specific to this code in source"
+    narrative_approval_tips: "Tips for Approval section based on general DME approval best practices, not code-specific guidance from source"
+    narrative_best_practices: "Best practice recommendations inferred from typical clinical documentation requirements"
+```
+
+### Legal Protection Rationale
+
+The catalog will include a disclaimer stating:
+> "Coverage information populated via AI-assisted research and may contain inaccuracies. Fields marked *(Under Review)* or *(Under Review - High Confidence)* indicate inferred information that should be independently verified before prescribing."
+
+**By tagging narrative content, we:**
+1. Clearly disclose what's known vs. inferred
+2. Protect prescribers by showing uncertainty
+3. Reduce legal liability for incorrect coverage claims
+4. Encourage independent verification of critical details
 
 ---
 
@@ -374,7 +508,10 @@ This policy may evolve. When updating:
 3. Review existing files for compliance with new standards
 4. Update `HANDOFF_PROMPT.md` with policy changes
 
-**Current Version:** 1.0 (Initial policy - 2025-10-29)
+**Version History:**
+- **1.2** (2025-10-29): Added comprehensive narrative Markdown tagging guidance for legal protection
+- **1.1** (2025-10-29): Simplified tagging system - only (Under Review - High Confidence) and (Under Review) inline
+- **1.0** (2025-10-29): Initial policy
 
 ---
 
@@ -382,16 +519,34 @@ This policy may evolve. When updating:
 
 Before committing new reference files:
 
+**YAML Frontmatter:**
 - [ ] Read source document(s) completely
 - [ ] All data classified by tier (1-4)
 - [ ] Tier 2 fields tagged with (Under Review - High Confidence)
 - [ ] Tier 3 fields tagged with (Under Review) or blank
 - [ ] Tier 4 fields left blank with verification note
-- [ ] `data_quality` section completed with field_notes for all tagged fields
 - [ ] Critical fields are Tier 1 or 2 only
-- [ ] Source document referenced with line numbers in References section
-- [ ] No fabricated or guessed data in critical fields
 - [ ] Tags only contain (Under Review - High Confidence) or (Under Review) - no other inline explanations
+
+**Narrative Markdown Content:**
+- [ ] All inferred requirements/claims tagged with *(Under Review - High Confidence)* or *(Under Review)*
+- [ ] Clinical Overview tagged for coverage claims
+- [ ] Coverage Details sections tagged for requirements
+- [ ] Documentation Requirements tagged for inferred needs
+- [ ] Common Denial Reasons tagged if inferred
+- [ ] Tips for Approval tagged for recommendations
+- [ ] Important Notes tagged for coverage claims
+
+**Data Quality Tracking:**
+- [ ] `data_quality` section completed with field_notes for all YAML tags
+- [ ] `data_quality.field_notes` includes explanations for narrative tags
+- [ ] Use descriptive keys like `narrative_frequency_claim`, `narrative_approval_tips`, etc.
+- [ ] Source document referenced with line numbers in References section
+
+**Quality Checks:**
+- [ ] No fabricated or guessed data in critical fields
+- [ ] Uncertainty clearly disclosed through tagging
+- [ ] Legal protection through comprehensive tag coverage
 
 ---
 

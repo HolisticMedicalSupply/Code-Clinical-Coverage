@@ -54,7 +54,8 @@ requires_resna_atp: false  # (Under Review) if uncertain
 discontinued: false  # Set to true if code is obsolete
 
 # Data Quality Tracking
-# See DATA_INTEGRITY_POLICY.md for tagging guidelines
+# See DATA_INTEGRITY_POLICY.md v1.2 for tagging guidelines
+# IMPORTANT: Tags apply to BOTH YAML frontmatter AND narrative Markdown content
 # Use (Under Review - High Confidence) for Tier 2 (high confidence inferences)
 # Use (Under Review) for Tier 3 (educated guesses)
 # No tag needed for Tier 1 (direct from source)
@@ -65,9 +66,14 @@ data_quality:
   needs_verification: []  # Fields with (Under Review) tag or blank (Tier 3-4)
   external_searches: []  # List any web searches performed with URLs
   field_notes:
-    # Add explanations for tagged fields here
+    # YAML frontmatter explanations
     # Example: icd10_codes: "Logically related to conditions mentioned in source"
     # Example: quantity_limit: "Not explicitly stated; typical pattern for this equipment type"
+
+    # Narrative Markdown explanations
+    # Example: narrative_frequency_claim: "Clinical Overview states 'typically 1 per 12 months' - inferred from standard replacement cycle"
+    # Example: narrative_approval_tips: "Tips for Approval section based on general DME best practices, not code-specific"
+    # Example: narrative_denial_reasons: "Common denial reasons inferred from typical DME denial patterns"
   last_verified: "2025-10-29"
   verified_by: ""  # Your name or "Claude Code"
 
@@ -83,21 +89,24 @@ reviewed_by: ""  # Your initials or name
 
 [Brief 1-2 sentence description of what this item is and when it's used]
 
+[Add *(Under Review - High Confidence)* or *(Under Review)* tags after any inferred claims about coverage, requirements, or typical use patterns]
+
 ## Coverage Details
 
 ### Medicare Coverage Criteria
 
 **Clinical Requirements:**
 - [Requirement 1]
-- [Requirement 2]
+- [Requirement 2 - if inferred, add tag] *(Under Review - High Confidence)*
 
 **Documentation Requirements:**
 - [Documentation need 1]
-- [Documentation need 2]
+- [Documentation need 2 - if inferred, add tag] *(Under Review)*
+- [Typically limited to X per 12 months] *(Under Review - High Confidence)*
 
 **Important Notes:**
 - [Special consideration 1]
-- [Special consideration 2]
+- [Special consideration 2 - if inferred, add tag] *(Under Review)*
 
 ### NY Medicaid (Nassau County)
 
@@ -136,18 +145,20 @@ reviewed_by: ""  # Your initials or name
 
 ## Common Denial Reasons
 
-1. **"Denial reason 1"** - Explanation
-2. **"Denial reason 2"** - Explanation
+1. **"Denial reason 1"** - Explanation. Fix: [Solution] *(Under Review - High Confidence if inferred)*
+2. **"Denial reason 2"** - Explanation. Fix: [Solution] *(Under Review if inferred)*
 
 ## Tips for Approval
 
 **Medicare:**
-- Tip 1
-- Tip 2
+- Tip 1 *(Under Review - High Confidence if inferred best practice)*
+- Tip 2 *(Under Review if educated guess)*
+- [Be specific about requirement] *(tag if inferred)*
 
 **Medicaid:**
-- Tip 1
+- Tip 1 *(tag if not explicit in source)*
 - Tip 2
+- [Document specific detail] *(tag if recommendation inferred)*
 
 ## Related Codes
 

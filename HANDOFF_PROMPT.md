@@ -193,6 +193,104 @@ From ApprovedCategoriesAndCodes.csv, get list of HCPCS codes for that BOC
 - Ensure coverage details match source documents
 - Verify ICD-10 codes are valid
 
+### 🚨 CRITICAL: Data Integrity and Tagging Requirements
+
+**SEE DATA_INTEGRITY_POLICY.md v1.2 for complete guidelines**
+
+This documentation will be used by physicians for clinical and billing decisions. **Accuracy over completeness.**
+
+#### Tags Apply to BOTH YAML and Narrative Markdown
+
+All inferred information must be tagged in **both**:
+1. **YAML frontmatter** (structured metadata)
+2. **Narrative Markdown** (clinical overview, coverage details, tips, denial reasons)
+
+#### Tagging System
+
+Use these tags inline:
+- **`# (Under Review - High Confidence)`** - High confidence inference (90%+ certain)
+- **`# (Under Review)`** - Educated guess (50-90% certain)
+- **Leave blank** - Unknown (<50% certain)
+- **No tag** - Direct from source (100% certain)
+
+**YAML Example:**
+```yaml
+medicare:
+  covered: true  # Direct from source - no tag
+  prior_auth: false  # (Under Review - High Confidence)
+  frequency_limit: "Once every 5 years"  # (Under Review - High Confidence)
+  quantity_limit: "1 per patient"  # (Under Review)
+```
+
+**Markdown Example:**
+```markdown
+## Clinical Overview
+
+This item is **rarely covered** *(Under Review - High Confidence)* due to strict requirements.
+
+**Documentation Requirements:**
+- Physician prescription required
+- Typically limited to 1 per 12 months *(Under Review - High Confidence)*
+- Face-to-face encounter within 6 months *(Under Review)*
+```
+
+#### What to Tag in Narrative
+
+**Tag these:**
+- Frequency/quantity claims ("Typically 1 per 12 months")
+- Documentation requirements inferred from patterns
+- Approval tips and best practices
+- Common denial reasons if inferred
+- Coverage criteria synthesis
+- "Usually," "typically," "generally" statements
+
+**Don't tag these:**
+- Direct quotes from source
+- Item descriptions ("This is a bedpan made of plastic")
+- Section headings
+- Factual definitions
+
+#### Required: data_quality.field_notes
+
+All tags (YAML and narrative) must have explanations in `data_quality.field_notes`:
+
+```yaml
+data_quality:
+  field_notes:
+    # YAML tags
+    prior_auth_medicare: "Not in source; inferred from absence (typical for basic DME)"
+
+    # Narrative tags
+    narrative_frequency_claim: "'Typically 1 per 12 months' inferred from replacement cycle, not explicit in source"
+    narrative_approval_tips: "Tips section based on general DME best practices, not code-specific guidance"
+    narrative_denial_reasons: "Common denials inferred from typical patterns, not specific to this code"
+```
+
+#### Legal Protection Rationale
+
+The HTML catalog will display these tags to physicians with a disclaimer:
+> "Coverage information populated via AI-assisted research. Fields marked *(Under Review)* or *(Under Review - High Confidence)* should be independently verified."
+
+**This protects:**
+1. Prescribers - Know what needs verification
+2. Your company - Clear disclosure of uncertainty
+3. Legal liability - Reduces claims about incorrect coverage info
+
+#### Critical vs Non-Critical Fields
+
+**MUST be Tier 1 or 2 (no guessing):**
+- `covered` (true/false)
+- `prior_auth`, `dvs_authorization`
+- `modifiers` (billing codes)
+- Basic clinical indications
+- Coverage requirements
+
+**Can be Tier 3-4 (educated guess or blank):**
+- `requires_specialty_eval`
+- Extended ICD-10 lists
+- Related codes
+- Some special notes
+
 ### Common Pitfalls to Avoid
 
 1. **Discontinued codes** - Some codes in CSV may be obsolete (e.g., K0553, K0554 replaced by A4239, E2103)
@@ -256,6 +354,10 @@ Each completed reference file should:
 - [ ] Include common denial reasons
 - [ ] Provide prescription tips for physicians
 - [ ] Reference source documents
+- [ ] **All inferred YAML fields tagged with (Under Review - High Confidence) or (Under Review)**
+- [ ] **All inferred narrative content tagged with *(Under Review - High Confidence)* or *(Under Review)***
+- [ ] **Complete data_quality.field_notes with explanations for all tags**
+- [ ] **Critical fields (covered, prior_auth, dvs_authorization, modifiers) are Tier 1 or 2 only**
 
 ## Questions to Ask If Stuck
 
@@ -267,6 +369,6 @@ Each completed reference file should:
 
 ---
 
-**Last Updated:** 2025-10-29
+**Last Updated:** 2025-10-29 (v1.2 - added narrative Markdown tagging requirements)
 **Project Owner:** [Your Name/Company]
 **Repository:** Code-Clinical-Coverage
