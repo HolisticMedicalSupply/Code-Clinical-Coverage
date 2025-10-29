@@ -1,9 +1,15 @@
 # Data Integrity Policy for Clinical Coverage Reference
 
-**Version:** 1.2
+**Version:** 1.3
 **Effective Date:** 2025-10-29
-**Last Updated:** 2025-10-29 (added narrative Markdown tagging guidance)
+**Last Updated:** 2025-10-29 (CRITICAL FIX: tags must be in string values, not YAML comments)
 **Purpose:** Ensure accuracy and reliability of clinical coverage documentation for medical prescribers
+
+**🚨 CRITICAL CHANGE IN v1.3:**
+- Tags must be **part of the string value**, NOT in YAML comments (#)
+- Comments are not parsed and won't display in HTML
+- For boolean fields needing tags, convert to string: `"false (Under Review)"`
+- For string fields, append tag: `"Once every 5 years (Under Review - High Confidence)"`
 
 ---
 
@@ -45,7 +51,9 @@ medicare:
 
 **Definition:** Logical extension or synthesis of explicit source data. The inference is almost certain based on clear patterns or medical/policy logic.
 
-**Action:** Include with `(Under Review - High Confidence)` tag in YAML or markdown. Add detailed reasoning to `data_quality.field_notes` section.
+**Action:** Include `(Under Review - High Confidence)` tag **as part of the string value** in YAML, or inline in markdown. Add detailed reasoning to `data_quality.field_notes` section.
+
+**CRITICAL:** Tags must be part of the value, NOT in YAML comments. Comments are not parsed and won't display in HTML.
 
 **When to use:**
 - Combining related statements from source into single field
@@ -54,17 +62,29 @@ medicare:
 
 **Examples:**
 ```yaml
-frequency_limit: "Once every 5 years (reasonable useful lifetime)"  # (Under Review - High Confidence)
-special_notes: "Patient must be confined"  # (Under Review - High Confidence)
+# For string fields, append tag to the string value:
+frequency_limit: "Once every 5 years (reasonable useful lifetime) (Under Review - High Confidence)"
+special_notes: "Patient must be confined (Under Review - High Confidence)"
 
+# For boolean fields needing tags, convert to string with tag:
+prior_auth: "false (Under Review - High Confidence)"
+face_to_face: "false (Under Review)"
+
+# For lists, append tag to each inferred item:
 icd10_primary:
-  - "Z99.3 - Dependence on wheelchair"  # Explicitly in source
-  - "R26.2 - Difficulty in walking"  # (Under Review - High Confidence)
+  - "Z99.3 - Dependence on wheelchair"  # Explicitly in source - no tag
+  - "R26.2 - Difficulty in walking (Under Review - High Confidence)"
+  - "M62.81 - Muscle weakness (Under Review - High Confidence)"
+
+# Verified fields stay as native types (boolean, etc.):
+covered: true  # Direct from source
+dvs_authorization: true  # Direct from source
 
 # Detailed explanations go in data_quality section
 data_quality:
   field_notes:
     frequency_limit: "Source says '5-year reasonable useful lifetime' - inferred standard frequency wording"
+    prior_auth: "Not mentioned in source; inferred from absence (typical for standard DME)"
     icd10_r26_2: "Logically related to mobility issues mentioned in source; standard code for difficulty walking"
 ```
 
@@ -83,7 +103,7 @@ data_quality:
 
 **Definition:** Reasonable assumption based on partial information, industry standards, or comparison to similar codes, but not directly verifiable from source.
 
-**Action:** Include with `(Under Review)` tag. Add detailed reasoning to `data_quality.field_notes` section.
+**Action:** Include `(Under Review)` tag **as part of the string value**. Add detailed reasoning to `data_quality.field_notes` section.
 
 **When to use:**
 - Field likely true but not explicitly stated
@@ -92,9 +112,12 @@ data_quality:
 
 **Examples:**
 ```yaml
-requires_specialty_eval: false  # (Under Review)
-quantity_limit: "1 per patient"  # (Under Review)
-face_to_face: false  # (Under Review)
+# For boolean fields needing tags, convert to string:
+requires_specialty_eval: "false (Under Review)"
+face_to_face: "false (Under Review)"
+
+# For string fields, append tag:
+quantity_limit: "1 per patient (Under Review)"
 
 # Detailed explanations go in data_quality section
 data_quality:
@@ -382,17 +405,20 @@ data_quality:
 ## 📝 Tagging Examples
 
 ### In YAML Frontmatter:
+
+**CRITICAL: Tags must be IN the value string, not in YAML comments!**
+
 ```yaml
 medicare:
-  covered: true  # Tier 1: No tag (explicit in source)
-  prior_auth: false  # (Under Review - High Confidence)
-  frequency_limit: "Once every 5 years (reasonable useful lifetime)"  # (Under Review - High Confidence)
-  quantity_limit: "1 per patient"  # (Under Review)
+  covered: true  # Tier 1: No tag needed (explicit in source)
+  prior_auth: "false (Under Review - High Confidence)"  # Convert boolean to string with tag
+  frequency_limit: "Once every 5 years (reasonable useful lifetime) (Under Review - High Confidence)"
+  quantity_limit: "1 per patient (Under Review)"
   special_notes: "KX modifier required when criteria met"  # Tier 1: No tag
 
 icd10_primary:
-  - "Z99.3 - Dependence on wheelchair"  # (Under Review - High Confidence)
-  - "R26.2 - Difficulty in walking"  # (Under Review - High Confidence)
+  - "Z99.3 - Dependence on wheelchair (Under Review - High Confidence)"
+  - "R26.2 - Difficulty in walking (Under Review - High Confidence)"
 
 # Explanations go in field_notes
 data_quality:
@@ -444,7 +470,7 @@ data_quality:
 When source says "Verify code availability with NY Medicaid":
 ```yaml
 medicaid_nassau:
-  covered: true  # (Under Review)
+  covered: "true (Under Review)"  # Convert to string with tag
   special_notes: "VERIFY code availability with NYRx (518) 486-3209 before prescribing"
 
 data_quality:
@@ -464,10 +490,10 @@ medicare:
 ### "Same as [CODE]" Pattern:
 When source says "Same as E0163":
 ```yaml
-# Reference the other code
+# Reference the other code - append tags to string values
 clinical_indications:
-  - "Same as E0163"  # (Under Review - High Confidence)
-special_notes: "See E0163 for base coverage criteria"  # (Under Review - High Confidence)
+  - "Same as E0163 (Under Review - High Confidence)"
+special_notes: "See E0163 for base coverage criteria (Under Review - High Confidence)"
 
 data_quality:
   field_notes:
@@ -509,6 +535,7 @@ This policy may evolve. When updating:
 4. Update `HANDOFF_PROMPT.md` with policy changes
 
 **Version History:**
+- **1.3** (2025-10-29): CRITICAL FIX - Tags must be in string values, not YAML comments (comments aren't parsed for HTML)
 - **1.2** (2025-10-29): Added comprehensive narrative Markdown tagging guidance for legal protection
 - **1.1** (2025-10-29): Simplified tagging system - only (Under Review - High Confidence) and (Under Review) inline
 - **1.0** (2025-10-29): Initial policy

@@ -48,17 +48,22 @@ medicaid_brooklyn:
 
 # Quick flags for filtering/searching
 requires_prior_auth_any: false
-requires_face_to_face_any: false  # (Under Review) if uncertain
-requires_specialty_eval: false  # (Under Review) if uncertain
-requires_resna_atp: false  # (Under Review) if uncertain
+requires_face_to_face_any: "false (Under Review)"  # Convert to string with tag if uncertain
+requires_specialty_eval: "false (Under Review)"  # Convert to string with tag if uncertain
+requires_resna_atp: "false (Under Review)"  # Convert to string with tag if uncertain
 discontinued: false  # Set to true if code is obsolete
 
 # Data Quality Tracking
-# See DATA_INTEGRITY_POLICY.md v1.2 for tagging guidelines
+# See DATA_INTEGRITY_POLICY.md v1.3 for tagging guidelines
+# 🚨 CRITICAL: Tags must be IN the string value, NOT in YAML comments!
+# Comments (#) are not parsed and won't display in HTML
 # IMPORTANT: Tags apply to BOTH YAML frontmatter AND narrative Markdown content
 # Use (Under Review - High Confidence) for Tier 2 (high confidence inferences)
 # Use (Under Review) for Tier 3 (educated guesses)
 # No tag needed for Tier 1 (direct from source)
+# Examples:
+#   prior_auth: "false (Under Review - High Confidence)"  # Boolean as string with tag
+#   frequency_limit: "Once every 5 years (Under Review - High Confidence)"  # String with tag appended
 data_quality:
   primary_source: "[Document name] (lines X-Y)"
   source_verified_fields: []  # Fields directly from source (Tier 1)

@@ -195,7 +195,7 @@ From ApprovedCategoriesAndCodes.csv, get list of HCPCS codes for that BOC
 
 ### 🚨 CRITICAL: Data Integrity and Tagging Requirements
 
-**SEE DATA_INTEGRITY_POLICY.md v1.2 for complete guidelines**
+**SEE DATA_INTEGRITY_POLICY.md v1.3 for complete guidelines**
 
 This documentation will be used by physicians for clinical and billing decisions. **Accuracy over completeness.**
 
@@ -207,19 +207,26 @@ All inferred information must be tagged in **both**:
 
 #### Tagging System
 
-Use these tags inline:
-- **`# (Under Review - High Confidence)`** - High confidence inference (90%+ certain)
-- **`# (Under Review)`** - Educated guess (50-90% certain)
+**🚨 CRITICAL: Tags must be IN the string value, NOT in YAML comments!**
+
+YAML comments (#) are not parsed and won't display in HTML. Tags must be part of the actual value:
+
+- **`(Under Review - High Confidence)`** - High confidence inference (90%+ certain)
+- **`(Under Review)`** - Educated guess (50-90% certain)
 - **Leave blank** - Unknown (<50% certain)
 - **No tag** - Direct from source (100% certain)
 
 **YAML Example:**
 ```yaml
 medicare:
-  covered: true  # Direct from source - no tag
-  prior_auth: false  # (Under Review - High Confidence)
-  frequency_limit: "Once every 5 years"  # (Under Review - High Confidence)
-  quantity_limit: "1 per patient"  # (Under Review)
+  covered: true  # Direct from source - no tag needed
+  prior_auth: "false (Under Review - High Confidence)"  # Convert boolean to string with tag
+  frequency_limit: "Once every 5 years (Under Review - High Confidence)"  # Append tag to string
+  quantity_limit: "1 per patient (Under Review)"  # Append tag to string
+
+icd10_primary:
+  - "Z99.3 - Dependence on wheelchair (Under Review - High Confidence)"
+  - "R26.2 - Difficulty in walking (Under Review - High Confidence)"
 ```
 
 **Markdown Example:**
@@ -369,6 +376,6 @@ Each completed reference file should:
 
 ---
 
-**Last Updated:** 2025-10-29 (v1.2 - added narrative Markdown tagging requirements)
+**Last Updated:** 2025-10-29 (v1.3 - CRITICAL FIX: tags in string values, not YAML comments)
 **Project Owner:** [Your Name/Company]
 **Repository:** Code-Clinical-Coverage
