@@ -1,7 +1,8 @@
 # Data Integrity Policy for Clinical Coverage Reference
 
-**Version:** 1.0
+**Version:** 1.1
 **Effective Date:** 2025-10-29
+**Last Updated:** 2025-10-29 (simplified tagging system)
 **Purpose:** Ensure accuracy and reliability of clinical coverage documentation for medical prescribers
 
 ---
@@ -44,7 +45,7 @@ medicare:
 
 **Definition:** Logical extension or synthesis of explicit source data. The inference is almost certain based on clear patterns or medical/policy logic.
 
-**Action:** Include with `(Inferred)` tag in YAML or markdown.
+**Action:** Include with `(Under Review - High Confidence)` tag in YAML or markdown. Add detailed reasoning to `data_quality.field_notes` section.
 
 **When to use:**
 - Combining related statements from source into single field
@@ -53,24 +54,27 @@ medicare:
 
 **Examples:**
 ```yaml
-frequency_limit: "Once every 5 years (reasonable useful lifetime - Inferred)"
-# Source says "5-year reasonable useful lifetime" - inferred the frequency wording
-
-special_notes: "Patient must be confined (Inferred from E0163 base criteria)"
-# Source says E0165 has "same as E0163" - inferred the base requirement
+frequency_limit: "Once every 5 years (reasonable useful lifetime)"  # (Under Review - High Confidence)
+special_notes: "Patient must be confined"  # (Under Review - High Confidence)
 
 icd10_primary:
   - "Z99.3 - Dependence on wheelchair"  # Explicitly in source
-  - "R26.2 - Difficulty in walking (Inferred)"  # Logically related to mobility issues mentioned
+  - "R26.2 - Difficulty in walking"  # (Under Review - High Confidence)
+
+# Detailed explanations go in data_quality section
+data_quality:
+  field_notes:
+    frequency_limit: "Source says '5-year reasonable useful lifetime' - inferred standard frequency wording"
+    icd10_r26_2: "Logically related to mobility issues mentioned in source; standard code for difficulty walking"
 ```
 
 ```markdown
 **Important Notes:**
-- Must meet E0163 criteria first (Inferred from source stating "same as E0163 PLUS...")
+- Must meet E0163 criteria first (Under Review - High Confidence)
 ```
 
 **Quality Check:** Would a medical professional reading the source reach the same conclusion?
-- ✅ Almost certainly → Tier 2 with (Inferred) tag
+- ✅ Almost certainly → Tier 2 with (Under Review - High Confidence) tag
 - ❌ Maybe, maybe not → Tier 3
 
 ---
@@ -79,7 +83,7 @@ icd10_primary:
 
 **Definition:** Reasonable assumption based on partial information, industry standards, or comparison to similar codes, but not directly verifiable from source.
 
-**Action:** Include with `(Under Review)` tag or `(Verify)` tag.
+**Action:** Include with `(Under Review)` tag. Add detailed reasoning to `data_quality.field_notes` section.
 
 **When to use:**
 - Field likely true but not explicitly stated
@@ -88,18 +92,25 @@ icd10_primary:
 
 **Examples:**
 ```yaml
-requires_specialty_eval: false  # (Under Review - not mentioned in source)
-quantity_limit: "1 per patient (Verify with payer)"
-face_to_face: false  # (Under Review - typical for accessories but not stated)
+requires_specialty_eval: false  # (Under Review)
+quantity_limit: "1 per patient"  # (Under Review)
+face_to_face: false  # (Under Review)
+
+# Detailed explanations go in data_quality section
+data_quality:
+  field_notes:
+    requires_specialty_eval: "Not mentioned in source document; typical for standard DME items"
+    quantity_limit: "Not explicitly stated in source; typical pattern for this type of equipment"
+    face_to_face: "Not specified in source; typical for accessories but requires verification"
 ```
 
 ```markdown
 **Documentation Requirements:**
-- Standard written order required (Verify specific requirements with payer)
+- Standard written order required (Under Review)
 ```
 
 **Quality Check:** Is this a guess or semi-certain?
-- ✅ Reasonably certain but can't prove → Tier 3 with tag
+- ✅ Reasonably certain but can't prove → Tier 3 with (Under Review) tag
 - ❌ Just guessing → Tier 4
 
 ---
@@ -182,22 +193,28 @@ Each file must include a `data_quality` section in YAML frontmatter:
 ```yaml
 # Data Quality Tracking
 data_quality:
-  primary_source: "DM02, DM05, DM06.md"
+  primary_source: "DM02, DM05, DM06.md (lines 47-56)"
   source_verified_fields: ["clinical_indications", "medicare.covered", "medicaid_nassau.covered", "prior_auth", "dvs_authorization"]
-  inferred_fields: ["some_icd10_codes", "related_codes", "special_notes"]
-  needs_verification: ["quantity_limit", "requires_specialty_eval"]
+  high_confidence_fields: ["some_icd10_codes", "frequency_limit_wording"]
+  needs_verification: ["quantity_limit", "requires_specialty_eval", "face_to_face"]
   external_searches: []  # List any web searches performed
+  field_notes:
+    icd10_r26_2: "Logically related to mobility issues mentioned in source; standard code for difficulty walking"
+    frequency_limit: "Source says '5-year reasonable useful lifetime' - inferred standard frequency wording"
+    quantity_limit: "Not explicitly stated in source; typical pattern for this type of equipment"
+    face_to_face: "Not specified in source document; requires payer verification"
   last_verified: "2025-10-29"
   verified_by: "Claude Code"
 ```
 
 **Field Definitions:**
 
-- `primary_source`: Main research document(s) used
-- `source_verified_fields`: Fields directly from source (Tier 1)
-- `inferred_fields`: Fields using (Inferred) tag (Tier 2)
-- `needs_verification`: Fields using (Under Review) or blank (Tier 3-4)
+- `primary_source`: Main research document(s) used, with specific line numbers
+- `source_verified_fields`: Fields directly from source (Tier 1 - no tags)
+- `high_confidence_fields`: Fields using (Under Review - High Confidence) tag (Tier 2)
+- `needs_verification`: Fields using (Under Review) tag (Tier 3) or blank (Tier 4)
 - `external_searches`: Any web searches conducted, with URLs
+- `field_notes`: Detailed explanations for tagged fields - why inferred, what's uncertain, etc.
 - `last_verified`: Date of last review
 - `verified_by`: Who verified (human name or "Claude Code")
 
@@ -215,14 +232,14 @@ data_quality:
 
 ### Before Committing:
 - [ ] All critical fields (covered, prior_auth) are Tier 1 or 2
-- [ ] All inferences tagged with (Inferred)
-- [ ] All guesses tagged with (Under Review) or left blank
-- [ ] `data_quality` section completed
-- [ ] Source document referenced
+- [ ] All high confidence inferences tagged with (Under Review - High Confidence)
+- [ ] All educated guesses tagged with (Under Review) or left blank
+- [ ] `data_quality` section completed with field_notes for tagged fields
+- [ ] Source document referenced with line numbers
 
 ### Periodic Review (Human):
 - Review all (Under Review) fields
-- Verify all (Inferred) fields
+- Verify all (Under Review - High Confidence) fields
 - Fill blanks with additional research
 - Update `last_verified` and `verified_by`
 
@@ -233,21 +250,33 @@ data_quality:
 ### In YAML Frontmatter:
 ```yaml
 medicare:
-  covered: true  # Tier 1: Explicit in source
-  prior_auth: false  # Tier 1: Source says "NO PA"
-  frequency_limit: "Once every 5 years (reasonable useful lifetime - Inferred)"  # Tier 2
-  quantity_limit: "1 per patient (Under Review)"  # Tier 3
-  special_notes: "KX modifier required when criteria met"  # Tier 1
+  covered: true  # Tier 1: No tag (explicit in source)
+  prior_auth: false  # (Under Review - High Confidence)
+  frequency_limit: "Once every 5 years (reasonable useful lifetime)"  # (Under Review - High Confidence)
+  quantity_limit: "1 per patient"  # (Under Review)
+  special_notes: "KX modifier required when criteria met"  # Tier 1: No tag
+
+icd10_primary:
+  - "Z99.3 - Dependence on wheelchair"  # (Under Review - High Confidence)
+  - "R26.2 - Difficulty in walking"  # (Under Review - High Confidence)
+
+# Explanations go in field_notes
+data_quality:
+  field_notes:
+    prior_auth: "Not mentioned in source document; inferred from absence which is typical for standard DME"
+    frequency_limit: "Source says '5-year reasonable useful lifetime' - inferred standard frequency wording"
+    quantity_limit: "Not explicitly stated in source; typical pattern for this type of equipment"
+    icd10_codes: "Logically related to mobility issues mentioned in source; standard codes for conditions"
 ```
 
 ### In Markdown Narrative:
 ```markdown
 **Clinical Requirements:**
-- Patient confined to single room (Source: lines 45-48)
-- Physically incapable of using regular toilet (Inferred from confinement criteria)
+- Patient confined to single room
+- Physically incapable of using regular toilet
 
 **Important Notes:**
-- Typically limited to 1 per 12 months (Under Review - verify with MAC)
+- Typically limited to 1 per 12 months (Under Review)
 ```
 
 ---
@@ -281,8 +310,12 @@ medicare:
 When source says "Verify code availability with NY Medicaid":
 ```yaml
 medicaid_nassau:
-  covered: true  # (Under Review - source says verify availability)
+  covered: true  # (Under Review)
   special_notes: "VERIFY code availability with NYRx (518) 486-3209 before prescribing"
+
+data_quality:
+  field_notes:
+    medicaid_covered: "Source says verify availability - uncertain if code is in active fee schedule"
 ```
 
 ### Discontinued Codes:
@@ -299,8 +332,12 @@ When source says "Same as E0163":
 ```yaml
 # Reference the other code
 clinical_indications:
-  - "Same as E0163 (Inferred - source states same criteria)"
-special_notes: "See E0163 for base coverage criteria (Inferred)"
+  - "Same as E0163"  # (Under Review - High Confidence)
+special_notes: "See E0163 for base coverage criteria"  # (Under Review - High Confidence)
+
+data_quality:
+  field_notes:
+    clinical_indications: "Source states 'same as E0163' - inferred complete criteria from E0163 documentation"
 ```
 
 But still complete the full details by referencing E0163's data.
@@ -347,13 +384,14 @@ Before committing new reference files:
 
 - [ ] Read source document(s) completely
 - [ ] All data classified by tier (1-4)
-- [ ] Tier 2 fields tagged with (Inferred)
+- [ ] Tier 2 fields tagged with (Under Review - High Confidence)
 - [ ] Tier 3 fields tagged with (Under Review) or blank
 - [ ] Tier 4 fields left blank with verification note
-- [ ] `data_quality` section completed
+- [ ] `data_quality` section completed with field_notes for all tagged fields
 - [ ] Critical fields are Tier 1 or 2 only
-- [ ] Source document referenced in References section
+- [ ] Source document referenced with line numbers in References section
 - [ ] No fabricated or guessed data in critical fields
+- [ ] Tags only contain (Under Review - High Confidence) or (Under Review) - no other inline explanations
 
 ---
 
