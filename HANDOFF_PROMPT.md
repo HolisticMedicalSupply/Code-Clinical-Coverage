@@ -193,6 +193,40 @@ From ApprovedCategoriesAndCodes.csv, get list of HCPCS codes for that BOC
 - Ensure coverage details match source documents
 - Verify ICD-10 codes are valid
 
+### 🚨 IMPORTANT: Batch Processing for Large Categories
+
+**For BOC categories with MORE THAN 7 HCPCS codes:**
+
+1. **Split into batches** of no more than 7 codes per batch
+2. **Create batches logically** based on:
+   - Code type (supply codes vs devices)
+   - Complexity (simple vs complex coverage criteria)
+   - Similarity (related items together)
+3. **Process one batch at a time** - complete each batch fully before moving to next:
+   - Create all files in batch
+   - Commit batch with descriptive message
+   - Push batch to remote
+   - **Wait for user confirmation** before proceeding to next batch
+4. **Use clear batch naming** in commit messages: "DM16 Batch 1: Supply codes (2 files)"
+
+**Example: DM16 has 9 codes - Split into 3 batches:**
+- **Batch 1: Supply codes** (A4558, A4595) - 2 files
+- **Batch 2: Specialized devices** (E0490, E0491, E0744) - 3 files
+- **Batch 3: Standard NMES devices** (E0731, E0740, E0745, E0764) - 4 files
+
+**Rationale:**
+- Prevents context exhaustion
+- Allows incremental progress tracking
+- User can save batch plan in case of failure
+- Enables recovery from specific batch if issues occur
+- Commits are more atomic and manageable
+
+**Before starting large category:**
+1. Count total codes in category
+2. If >7 codes, outline batch plan to user
+3. Get user confirmation of batch structure
+4. Process batches incrementally with user prompting between batches
+
 ### 🚨 CRITICAL: Data Integrity and Tagging Requirements
 
 **SEE DATA_INTEGRITY_POLICY.md v1.3 for complete guidelines**
@@ -333,11 +367,25 @@ Can you help me fill in the reference files for BOC category [DM02/DM05/etc]?
 
 Please:
 1. Review the research document(s) for this category
-2. Create the BOC folder if it doesn't exist
-3. For each HCPCS code in this category, create a file using the template
-4. Extract coverage information from the research documents into the structured format
+2. Count total codes in category - if >7 codes, outline a batch plan before starting
+3. Create the BOC folder if it doesn't exist
+4. For each HCPCS code (or batch if >7 codes), create a file using the template
+5. Extract coverage information from the research documents into the structured format
+6. If using batches, commit and push each batch, then wait for my confirmation before next batch
 
-Let's work on [X] codes at a time to avoid overload.
+Let's work on [X] codes at a time (or Batch [N]) to avoid overload.
+```
+
+**Example for large category:**
+```
+Please proceed with DM16 category.
+
+If it has more than 7 codes, outline your batch plan showing:
+- Total codes in category
+- How you'll split into batches (with code lists)
+- Rationale for batch groupings
+
+Then proceed with Batch 1 only and wait for my confirmation before Batch 2.
 ```
 
 ---
@@ -376,6 +424,7 @@ Each completed reference file should:
 
 ---
 
-**Last Updated:** 2025-10-29 (v1.3 - CRITICAL FIX: tags in string values, not YAML comments)
+**Last Updated:** 2025-10-29 (v1.4 - Added batch processing guidelines for categories >7 codes)
+**Previous Version:** v1.3 - CRITICAL FIX: tags in string values, not YAML comments
 **Project Owner:** [Your Name/Company]
 **Repository:** Code-Clinical-Coverage
