@@ -1,0 +1,272 @@
+# Clinical Coverage Reference Project - Handoff Prompt
+
+## Quick Context (Copy this to a new Claude Code session)
+
+```
+I am working on organizing clinical coverage documentation for a DME supplier approved
+for specific BOC (Business Operations Code) categories. The goal is to create structured
+reference materials that map HCPCS codes to clinical indications and coverage requirements
+across Medicare, Medicaid Nassau County, and Medicaid Brooklyn.
+
+CURRENT STATUS:
+- Repository contains source research documents (*.md files) with detailed coverage criteria
+- ApprovedCategoriesAndCodes.csv contains all BOC codes and HCPCS codes I'm approved for
+- Directory structure created: clinical-coverage-reference/items/ with template
+- Template uses YAML frontmatter for structured data + Markdown for narrative content
+
+OBJECTIVE:
+Create individual reference files for each HCPCS code that will later be fed to Claude Code
+for HTML catalog generation. Each file should consolidate clinical indications, ICD-10 codes,
+and coverage requirements from the research documents.
+
+FORMAT:
+Using Markdown with YAML frontmatter (see _templates/item-template.md)
+
+WORKFLOW:
+1. Review research documents to extract coverage info for specific HCPCS codes
+2. Fill in template with structured data (YAML) and narrative details (Markdown)
+3. Save to clinical-coverage-reference/items/[BOC_CODE]/[HCPCS].md
+4. Build incrementally - one BOC category at a time to avoid overload
+
+Please help me continue filling in the structured reference files.
+```
+
+---
+
+## Detailed Project Context
+
+### Business Purpose
+
+This is for a DME (Durable Medical Equipment) supplier creating a clinical coverage reference
+guide to assist prescribing physicians and facility staff. The guide maps:
+
+- **BOC Codes** → Business Operations Categories (e.g., DM02 = Commodes)
+- **HCPCS Codes** → Specific items (e.g., E0163 = Fixed-arm commode)
+- **Clinical Indications** → When to prescribe the item
+- **Coverage Requirements** → What documentation is needed for reimbursement
+
+### Payer Coverage Areas
+
+Coverage requirements differ by payer:
+- **Medicare** - Federal insurance for 65+ and disabled
+- **Medicaid Nassau County** - NY Medicaid for Nassau County residents
+- **Medicaid Brooklyn** - NY Medicaid for Brooklyn residents
+
+Each payer has different:
+- Prior authorization requirements
+- Documentation requirements (SWO, DWO, WOPD, Fiscal Order)
+- Frequency limits
+- Quantity limits
+- Special modifiers
+
+### Source Materials
+
+**Primary Sources:**
+1. **ApprovedCategoriesAndCodes.csv** - Master list of BOC codes and HCPCS codes
+2. **Research Documents** - Named by BOC codes (e.g., "DM02, DM05, DM06.md")
+   - These contain detailed coverage criteria extracted from Medicare LCDs and NY Medicaid policies
+   - Format: Organized by BOC code, then by HCPCS code within each category
+   - Include clinical usage criteria, approval requirements, prescription tips
+
+**Key Research Documents:**
+- DM series: Diabetic and medical equipment
+- M series: Mobility aids (wheelchairs, walkers, canes)
+- OR series: Orthotics
+- PD series: Prosthetics and devices
+- PE series: Enteral/parenteral nutrition
+- R series: Respiratory equipment
+- S series: Surgical dressings and support items
+
+### Output Structure
+
+```
+clinical-coverage-reference/
+├── items/
+│   ├── DM02/           # BOC category folders
+│   │   ├── E0160.md
+│   │   ├── E0163.md
+│   │   └── E0165.md
+│   ├── DM05/
+│   │   ├── E0607.md
+│   │   └── A4253.md
+│   └── ...
+├── _templates/
+│   └── item-template.md    # Template for each HCPCS code
+└── _generation-materials/  # Future: Compiled materials for HTML generation
+```
+
+### Data Structure (YAML Frontmatter)
+
+Each item file contains:
+
+**Identifying Information:**
+- BOC code and category name
+- HCPCS code and official description
+- Common/marketing name
+
+**Clinical Data:**
+- List of clinical indications
+- ICD-10 diagnosis codes
+- Contraindications (if applicable)
+
+**Coverage Requirements (per payer):**
+- Covered: yes/no
+- Prior authorization required
+- Face-to-face visit required
+- Documentation type needed
+- Modifiers required for billing
+- Frequency limits (how often can be ordered)
+- Quantity limits (how many units)
+- Special notes/requirements
+
+**Metadata:**
+- Quick filter flags (requires_prior_auth_any, requires_specialty_eval, etc.)
+- Last updated date
+- Source document references
+- Reviewer name
+
+### Key Terminology Reference
+
+**Medicare:**
+- **SWO** = Standard Written Order (basic prescription)
+- **DWO** = Detailed Written Order (more specific requirements)
+- **WOPD** = Written Order Prior to Delivery (must be signed before delivery)
+- **LCD** = Local Coverage Determination (Medicare policy)
+- **KX modifier** = Coverage criteria met (used in billing)
+- **Face-to-face** = Doctor must see patient in person within 6 months
+
+**NY Medicaid:**
+- **DVS Authorization** = Prior approval through eMedNY system
+- **Fiscal Order** = NY Medicaid prescription format
+- **# code** = Item requiring DVS authorization
+- **Frequency codes**: F3, F4, F5, F9, F10 (e.g., F3 = once every 3 years)
+- **WME Guidelines** = Wheelchair and Mobility Equipment evaluation requirements
+
+**Clinical:**
+- **ICD-10** = Diagnosis coding system
+- **MRADL** = Mobility-Related Activities of Daily Living
+- **RESNA ATP** = Assistive Technology Professional certification (required for complex items)
+
+### Common Coverage Patterns
+
+**Items requiring prior auth (usually):**
+- Power wheelchairs and complex seating
+- Specialized monitors (voice synthesizer, integrated lancing)
+- Continuous glucose monitors
+- Insulin pumps
+
+**Items NOT requiring prior auth (usually):**
+- Standard glucose monitor supplies (test strips, lancets)
+- Basic commode accessories
+- Replacement parts (unless high cost)
+
+**Items with frequency limits:**
+- Most DME has 5-year "reasonable useful lifetime" (Medicare)
+- Batteries: 2-year replacement
+- Wheelchair cushions: 2-3 years
+- Glucose monitors: 3-5 years
+
+### Workflow for Filling Templates
+
+**Step 1: Choose a BOC category**
+Example: Start with DM02 (Commodes)
+
+**Step 2: Find research document**
+Look for file named "DM02*.md" or similar
+
+**Step 3: Extract HCPCS codes**
+From ApprovedCategoriesAndCodes.csv, get list of HCPCS codes for that BOC
+
+**Step 4: For each HCPCS code:**
+1. Copy template to `items/[BOC]/[HCPCS].md`
+2. Fill in YAML frontmatter with structured data
+3. Fill in Markdown sections with narrative details
+4. Extract from research doc:
+   - Clinical indications
+   - Medicare coverage criteria
+   - Medicaid coverage criteria
+   - Common denial reasons
+   - Prescription tips
+
+**Step 5: Review and validate**
+- Check all required YAML fields are filled
+- Ensure coverage details match source documents
+- Verify ICD-10 codes are valid
+
+### Common Pitfalls to Avoid
+
+1. **Discontinued codes** - Some codes in CSV may be obsolete (e.g., K0553, K0554 replaced by A4239, E2103)
+2. **Coverage differences** - Don't assume all payers cover the same; check each
+3. **Bundling** - Some accessories are included in wheelchair base, only separately billable as replacements
+4. **Frequency confusion** - Medicare uses "reasonable useful lifetime", Medicaid uses specific F-codes
+5. **Generic vs specific** - Prescriptions must be specific (not "commode" but "E0163 fixed-arm commode")
+
+### Next Steps When Resuming
+
+**If starting fresh:**
+1. Review this handoff prompt
+2. Review the template: `clinical-coverage-reference/_templates/item-template.md`
+3. Review one research document to understand format
+4. Ask which BOC category to start with
+
+**If continuing existing work:**
+1. Check what BOC categories already have files created
+2. Ask which category or specific HCPCS codes to work on next
+3. Continue filling templates using research documents
+
+**If ready for HTML generation:**
+1. Verify all desired HCPCS codes have reference files created
+2. Review files for completeness and consistency
+3. Begin HTML catalog generation using the structured YAML data
+
+### Example Prompt to Resume Work
+
+```
+I need to continue building the clinical coverage reference. I've reviewed the HANDOFF_PROMPT.md.
+
+Can you help me fill in the reference files for BOC category [DM02/DM05/etc]?
+
+Please:
+1. Review the research document(s) for this category
+2. Create the BOC folder if it doesn't exist
+3. For each HCPCS code in this category, create a file using the template
+4. Extract coverage information from the research documents into the structured format
+
+Let's work on [X] codes at a time to avoid overload.
+```
+
+---
+
+## Technical Notes
+
+- CSV encoding: UTF-8
+- Markdown flavor: CommonMark/GitHub-flavored
+- YAML frontmatter: Standard YAML 1.2
+- Date format: ISO 8601 (YYYY-MM-DD)
+- File naming: [HCPCS_CODE].md (e.g., E0163.md)
+- Line length: No strict limit, wrap for readability
+
+## Success Criteria
+
+Each completed reference file should:
+- [ ] Have all required YAML fields populated
+- [ ] Include at least 2-3 clinical indications
+- [ ] List relevant ICD-10 codes
+- [ ] Document coverage for all 3 payers (Medicare, Nassau, Brooklyn)
+- [ ] Include common denial reasons
+- [ ] Provide prescription tips for physicians
+- [ ] Reference source documents
+
+## Questions to Ask If Stuck
+
+1. "Which BOC category should I focus on next?"
+2. "Can you show me an example from the research docs for [HCPCS code]?"
+3. "What does [term] mean in the context of DME billing?"
+4. "Is this code still active or has it been discontinued?"
+5. "Are coverage requirements the same for Nassau and Brooklyn?"
+
+---
+
+**Last Updated:** 2025-10-29
+**Project Owner:** [Your Name/Company]
+**Repository:** Code-Clinical-Coverage
