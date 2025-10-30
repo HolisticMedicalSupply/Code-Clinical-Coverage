@@ -221,11 +221,23 @@ From ApprovedCategoriesAndCodes.csv, get list of HCPCS codes for that BOC
 - Enables recovery from specific batch if issues occur
 - Commits are more atomic and manageable
 
-**Before starting large category:**
-1. Count total codes in category
-2. If >7 codes, outline batch plan to user
-3. Get user confirmation of batch structure
-4. Process batches incrementally with user prompting between batches
+**Before starting ANY category:**
+1. **READ ApprovedCategoriesAndCodes.csv** - Verify the complete list of codes for the category
+2. Count total codes in category (cross-check against CSV)
+3. If >7 codes, outline batch plan to user
+4. Get user confirmation of batch structure
+5. Process batches incrementally with user prompting between batches
+
+**Example - Reading the Crosswalk:**
+```bash
+# View all codes for a specific category (e.g., DM24)
+grep "^DM24" /home/user/Code-Clinical-Coverage/ApprovedCategoriesAndCodes.csv
+```
+
+The first row for each category shows: `BOC_CODE,CATEGORY_NAME,COUNT,"CODE_LIST"`
+- Verify COUNT matches the number of codes listed
+- Use CODE_LIST to ensure you create all required files
+- Cross-reference with source document to confirm coverage info available
 
 ### 🚨 CRITICAL: Data Integrity and Tagging Requirements
 
