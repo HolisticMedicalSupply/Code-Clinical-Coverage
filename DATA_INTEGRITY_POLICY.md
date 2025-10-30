@@ -377,6 +377,123 @@ data_quality:
 
 ---
 
+## ⭐ Best Practice: Detailed Field Notes
+
+**The field_notes section is critical for transparency and future verification.** High-quality field_notes should include:
+
+1. **Descriptive keys** - Name each note clearly (e.g., `medicare_requirements`, `clinical_criteria`, not just `note1`)
+2. **Direct source quotes** - Include actual text from source documents when available
+3. **Clear reasoning** - Explain WHY the inference was made and what evidence supports it
+4. **Comprehensive coverage** - Document all major inferred fields and complex synthesis
+
+### Example: Standard Field Notes (Acceptable)
+```yaml
+data_quality:
+  field_notes:
+    quantity_limit: "Not explicitly stated in source; typical pattern for this type of equipment"
+    face_to_face: "Not specified in source document; requires payer verification"
+```
+
+### Example: Enhanced Field Notes (Excellent - E0784 Standard)
+
+**This is the gold standard for field_notes documentation:**
+
+```yaml
+data_quality:
+  primary_source: "DM13, DM14, DM15.md (lines 5-10)"
+  source_verified_fields: ["covered", "prior_auth", "dvs_authorization", "documentation_type", "specialty_requirement", "mdi_trial_requirement"]
+  high_confidence_fields: ["clinical_indications", "icd10_primary", "mdi_trial_duration", "cpeptide_requirement", "mandatory_followup"]
+  needs_verification: ["face_to_face", "exact_rental_pricing", "requires_resna_atp"]
+  external_searches: []
+  field_notes:
+    # Include direct source quotes with explanations
+    medicare_requirements: "Source: 'SWO and WOPD required before dispensing; document comprehensive diabetes education completion, 6-month MDI trial with glucose logs ≥4 times/day, HbA1c, C-peptide and fasting glucose labs; physician treating multiple CSII patients working with diabetes care team; 3-month follow-up evaluations mandatory for continued coverage. LCD L33794, NCD 280.14.' - Direct quote shows all major requirements."
+
+    medicaid_requirements: "Source: 'Prior authorization required via Magellan (877-309-9493) for non-preferred products; endocrinologist or experienced diabetes practitioner order required; document all eligibility criteria including 6-month MDI failure; DVS authorization per PDSP list; monthly rental with RR modifier.' - Comprehensive Medicaid requirements with specific contact info."
+
+    # Explain synthesis and inference reasoning
+    clinical_criteria: "Source: 'Type 1/Type 2 diabetes requiring intensive insulin management with ≥3 injections/day for ≥6 months AND one of: HbA1c >7%, recurring hypoglycemia, wide glucose fluctuations (>140 mg/dL pre-meal), dawn phenomenon (fasting >200 mg/dL), or severe glycemic excursions' - Multiple pathways documented, synthesized into clinical_indications list."
+
+    # Document specific test requirements with source detail
+    cpeptide_testing: "Source: 'Requires C-peptide ≤110% lower normal limit with fasting glucose ≤225 mg/dL OR beta cell autoantibody positive' - Biochemical confirmation requirement clearly stated. Both C-peptide threshold and fasting glucose threshold explicit."
+
+    # Explain what's NOT in source but inferred
+    face_to_face: "Not explicitly mentioned in source for supplies. Face-to-face typically required for pump (E0784) authorization but not clearly stated for supply refills. Marked 'Under Review' pending verification."
+
+    # Document policy references and their significance
+    medicare_policy_references: "Source cites LCD L33794 (Noridian DME MAC) and NCD 280.14 (National Coverage Determination). These are authoritative sources - coverage criteria directly from Medicare policy."
+  last_verified: "2025-10-30"
+  verified_by: "Claude Code"
+```
+
+### Why This Standard is Better
+
+**The enhanced field_notes approach (E0784 standard) provides:**
+
+1. **Transparency** - Future reviewers can see exactly what source said and how it was interpreted
+2. **Verifiability** - Direct quotes make it easy to cross-check against source documents
+3. **Reasoning** - Clear explanation of synthesis (e.g., "Multiple pathways documented, synthesized into list")
+4. **Completeness** - Documents both what IS in source and what ISN'T but was inferred
+5. **Policy context** - Notes authoritative references (LCD, NCD) and their significance
+6. **Contact information** - Preserves specific phone numbers, policy numbers from source
+7. **Maintenance-friendly** - Future editors can quickly understand decisions without re-reading entire source
+
+### When to Use Enhanced vs. Standard Field Notes
+
+**Use Enhanced Field Notes (E0784 Standard) for:**
+- Complex items with multiple requirements (insulin pumps, power wheelchairs, complex DME)
+- Items requiring prior authorization
+- Items with strict clinical criteria (C-peptide tests, 6-month trials, etc.)
+- Items with multiple payers having different requirements
+- Categories with high denial rates where documentation details matter
+
+**Standard Field Notes are acceptable for:**
+- Simple, straightforward items (basic DME, standard supplies)
+- Items with minimal coverage criteria
+- Accessories and supplies with clear coverage patterns
+- Items where source documentation is brief and straightforward
+
+### Field Notes Organization
+
+**Organize field_notes by topic using clear descriptive keys:**
+
+```yaml
+field_notes:
+  # Medicare coverage - use "medicare_" prefix
+  medicare_requirements: "Source quote and explanation..."
+  medicare_documentation: "Specific documentation needs..."
+  medicare_policy_references: "LCD/NCD citations..."
+
+  # Medicaid coverage - use "medicaid_" prefix
+  medicaid_requirements: "Source quote and explanation..."
+  medicaid_authorization: "PA and DVS details..."
+  medicaid_contact_info: "Phone numbers, websites..."
+
+  # Clinical criteria - use "clinical_" prefix
+  clinical_criteria: "Clinical indications synthesis..."
+  clinical_testing: "Lab test requirements..."
+
+  # ICD-10 codes - use "icd10_" prefix
+  icd10_primary_codes: "How primary codes were selected..."
+  icd10_specific_code: "Why S72.xxx included..."
+
+  # Inferred fields - note what's NOT in source
+  face_to_face: "Not mentioned in source; typical pattern..."
+  quantity_limit: "Not explicit; inferred from equipment type..."
+
+  # Narrative sections - use "narrative_" prefix
+  narrative_approval_tips: "Tips section based on best practices..."
+  narrative_denial_reasons: "Common denials inferred from patterns..."
+```
+
+**Key Naming Conventions:**
+- Use descriptive names: `medicare_requirements` not `note1`
+- Use prefixes for organization: `medicare_`, `medicaid_`, `clinical_`, `icd10_`, `narrative_`
+- Be specific: `cpeptide_testing` not just `testing`
+- Indicate content type: `_requirements`, `_documentation`, `_policy_references`, `_contact_info`
+
+---
+
 ## 🔄 Review Process
 
 ### Initial Creation:
