@@ -646,7 +646,26 @@ Be explicit about uncertainty in narrative sections:
 
 **All files should meet or exceed the E0784.md standard for completeness and usefulness.**
 
-The file `clinical-coverage-reference/items/DM13/E0784.md` (External Ambulatory Insulin Infusion Pump) represents the **GOLD STANDARD** for reference file quality. All future files should strive to match this level of comprehensiveness and practical utility.
+The following files represent **GOLD STANDARD** examples for reference file quality. All future files should strive to match this level of comprehensiveness and practical utility.
+
+### Gold Standard Examples
+
+**Primary Reference:**
+- **`clinical-coverage-reference/items/DM13/E0784.md`** - External Ambulatory Insulin Infusion Pump
+  - THE benchmark for complex devices requiring prior authorization
+  - Demonstrates all 7 comprehensive narrative sections
+  - Exceptional field_notes with direct source quotes
+
+**Additional Exemplary Files:**
+- **`clinical-coverage-reference/items/M07/K0013.md`** - Custom Power Wheelchair
+  - Excellent for complex devices with specialty evaluation requirements (RESNA ATP)
+  - Demonstrates ADMC guidance and custom vs modular justification
+  - Shows how to document "why modular inadequate" for custom approvals
+
+- **`clinical-coverage-reference/items/M06/K0006.md`** - Heavy Duty Manual Wheelchair
+  - Excellent for items with multiple coverage pathways (Weight/Spasticity/Measurements)
+  - Shows clear differentiation between related codes (K0001→K0006→K0007 progression)
+  - Demonstrates how to present three distinct qualification routes
 
 ### What Makes E0784 the Gold Standard
 

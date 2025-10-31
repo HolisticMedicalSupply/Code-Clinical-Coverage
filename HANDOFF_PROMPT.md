@@ -244,7 +244,24 @@ The first row for each category shows: `BOC_CODE,CATEGORY_NAME,COUNT,"CODE_LIST"
 
 **ALL NEW FILES MUST MEET OR EXCEED THE E0784.md STANDARD**
 
-The file `clinical-coverage-reference/items/DM13/E0784.md` represents the **GOLD STANDARD** for quality and completeness. Before creating any new files, **READ E0784.md** to understand the expected level of detail.
+The following files represent the **GOLD STANDARD** for quality and completeness. Before creating any new files, **READ these examples** to understand the expected level of detail.
+
+### Gold Standard Examples to Review
+
+**Primary Reference (Read First):**
+- **`clinical-coverage-reference/items/DM13/E0784.md`** - External Ambulatory Insulin Infusion Pump
+  - THE benchmark - demonstrates all 7 comprehensive sections
+  - Complex device with prior authorization requirements
+  - Exceptional field_notes with direct source quotes
+
+**Additional Examples (Read for specific scenarios):**
+- **`clinical-coverage-reference/items/M07/K0013.md`** - Custom Power Wheelchair
+  - For complex devices requiring specialty evaluation (RESNA ATP, PT/OT)
+  - Shows ADMC guidance and custom vs modular justification approach
+
+- **`clinical-coverage-reference/items/M06/K0006.md`** - Heavy Duty Manual Wheelchair
+  - For items with multiple coverage pathways (3 routes: Weight/Spasticity/Measurements)
+  - Shows progression through related codes (K0001→K0006→K0007)
 
 ### What E0784 Demonstrates
 
