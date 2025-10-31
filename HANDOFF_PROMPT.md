@@ -263,6 +263,12 @@ The following files represent the **GOLD STANDARD** for quality and completeness
   - For items with multiple coverage pathways (3 routes: Weight/Spasticity/Measurements)
   - Shows progression through related codes (K0001→K0006→K0007)
 
+- **`clinical-coverage-reference/items/DM05/E2103.md`** - Non-Adjunctive (Therapeutic) CGM Receiver
+  - For items with code replacements and coverage transitions
+  - Shows discontinued code handling (K0554 → E2103 with specific dates)
+  - Demonstrates payer pathway changes (DME → Pharmacy transition)
+  - Clear backward compatibility and mutual exclusivity guidance
+
 ### What E0784 Demonstrates
 
 **1. Complete YAML (Required Minimum):**

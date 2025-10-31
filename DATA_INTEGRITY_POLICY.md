@@ -667,6 +667,13 @@ The following files represent **GOLD STANDARD** examples for reference file qual
   - Shows clear differentiation between related codes (K0001→K0006→K0007 progression)
   - Demonstrates how to present three distinct qualification routes
 
+- **`clinical-coverage-reference/items/DM05/E2103.md`** - Non-Adjunctive (Therapeutic) CGM Receiver
+  - Excellent for items with code replacements and coverage pathway transitions
+  - Demonstrates handling of discontinued codes (K0554 → E2103 transition)
+  - Shows payer pathway changes (NY Medicaid DME → Pharmacy transition with specific dates)
+  - Documents backward compatibility (prior authorizations honored through expiration)
+  - Clear mutual exclusivity guidance (cannot bill standard BGM with CGM)
+
 ### What Makes E0784 the Gold Standard
 
 **1. Complete YAML Frontmatter (Required Minimum)**
