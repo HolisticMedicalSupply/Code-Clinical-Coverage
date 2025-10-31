@@ -1,8 +1,8 @@
 # Data Integrity Policy for Clinical Coverage Reference
 
-**Version:** 1.3
-**Effective Date:** 2025-10-29
-**Last Updated:** 2025-10-29 (CRITICAL FIX: tags must be in string values, not YAML comments)
+**Version:** 1.4
+**Effective Date:** 2025-10-30
+**Last Updated:** 2025-10-30 (Added E0784 Comprehensive Standard as Gold Standard benchmark)
 **Purpose:** Ensure accuracy and reliability of clinical coverage documentation for medical prescribers
 
 **🚨 CRITICAL CHANGE IN v1.3:**
@@ -642,6 +642,211 @@ Be explicit about uncertainty in narrative sections:
 
 ---
 
+## ⭐ E0784 Comprehensive Standard (GOLD STANDARD)
+
+**All files should meet or exceed the E0784.md standard for completeness and usefulness.**
+
+The file `clinical-coverage-reference/items/DM13/E0784.md` (External Ambulatory Insulin Infusion Pump) represents the **GOLD STANDARD** for reference file quality. All future files should strive to match this level of comprehensiveness and practical utility.
+
+### What Makes E0784 the Gold Standard
+
+**1. Complete YAML Frontmatter (Required Minimum)**
+- ✅ All required fields present (boc_category, icd10_primary, separate medicaid_nassau/medicaid_brooklyn)
+- ✅ Proper tag format per v1.3 (tags IN string values, not YAML comments)
+- ✅ Comprehensive data_quality section with detailed field_notes
+- ✅ Direct source quotes in field_notes
+- ✅ Clear reasoning for all inferences
+
+**2. Comprehensive Narrative Content (Gold Standard)**
+- ✅ **Clinical Overview** - Detailed explanation of what the item is, how it works, and critical coverage notes
+- ✅ **Coverage Details** - Separated by payer (Medicare, NY Medicaid Nassau, NY Medicaid Brooklyn) with:
+  - All clinical requirements numbered and detailed
+  - All documentation requirements listed
+  - Important notes and special considerations
+  - Policy references (LCD, NCD numbers)
+- ✅ **Prescription Checklist for Physicians** - Actionable checklist with:
+  - Required elements for all payers
+  - Specific requirements by payer type
+  - Checkbox format for easy use
+- ✅ **Common Denial Reasons** - Numbered list with:
+  - Specific denial reason in quotes
+  - Clear explanation of the problem
+  - "Fix:" with actionable solution
+- ✅ **Tips for Approval** - Organized by payer with:
+  - Specific documentation recommendations
+  - Proactive guidance to avoid denials
+  - Contact information where relevant
+- ✅ **Related Codes** - List of associated codes with:
+  - Code number
+  - Brief description
+  - Relationship to current code
+- ✅ **References** - Complete list of:
+  - Medicare LCD/NCD numbers
+  - Policy article numbers
+  - Contact information for PA/authorization
+  - Source document line references
+
+### Minimum vs. Gold Standard
+
+| Component | **Minimum (Policy Compliant)** | **Gold Standard (E0784 Level)** |
+|-----------|--------------------------------|----------------------------------|
+| **YAML Frontmatter** | All required fields present | ✅ Same - all required fields |
+| **Clinical Overview** | 1-2 sentences | ✅ **Detailed paragraph(s)** explaining item, function, critical notes |
+| **Coverage Details** | Basic requirements listed | ✅ **Comprehensive** - numbered requirements, documentation lists, policy refs |
+| **Prescription Checklist** | ❌ Optional | ✅ **REQUIRED** - actionable checkbox format |
+| **Common Denial Reasons** | ❌ Optional | ✅ **REQUIRED** - specific denials with fixes |
+| **Tips for Approval** | ❌ Optional | ✅ **REQUIRED** - organized by payer |
+| **Related Codes** | ❌ Optional | ✅ **REQUIRED** - with descriptions |
+| **References** | Source doc line numbers | ✅ **Complete** - LCD/NCD, contact info, sources |
+
+### When to Use Gold Standard vs. Minimum
+
+**ALWAYS use Gold Standard (E0784 level) for:**
+- ❗ Items requiring prior authorization
+- ❗ Items with complex clinical criteria (multi-step requirements, lab tests, trials)
+- ❗ Items with high denial rates
+- ❗ Expensive items (>$1000)
+- ❗ Items with strict documentation requirements
+- ❗ Items physicians frequently ask about
+- ❗ Items with payer-specific differences in coverage
+
+**Minimum standard acceptable for:**
+- ✓ Very simple replacement parts (e.g., single footplate, standard battery)
+- ✓ Items with straightforward "replacement only" criteria and no other complexity
+- ✓ Items rarely prescribed
+- ✓ Items with minimal documentation (1-2 lines in source)
+
+**Rule of Thumb:** If a physician might have questions about coverage, use Gold Standard. If in doubt, use Gold Standard.
+
+### How to Achieve E0784 Standard
+
+**Step 1: Read Source Thoroughly**
+- Read entire source section for the code (don't just extract bullet points)
+- Note ALL requirements, not just primary ones
+- Identify common scenarios, exceptions, and special cases
+
+**Step 2: Extract to YAML (Required)**
+- Complete all required YAML fields per template
+- Add comprehensive field_notes with source quotes
+- Tag all inferred data appropriately
+
+**Step 3: Write Comprehensive Narrative (Gold Standard)**
+
+**Clinical Overview:**
+```markdown
+## Clinical Overview
+
+[Item name] represents a [detailed description of what it is]. This [type]
+[explains how it works or is used] for patients with [conditions].
+
+**CRITICAL COVERAGE NOTE:** [Any major restrictions or requirements]
+*(Under Review - High Confidence)*
+
+[Additional context about when/why used, technical details if relevant]
+```
+
+**Coverage Details:**
+```markdown
+### Medicare Coverage Criteria
+
+**Clinical Requirements - ALL Must Be Met:**
+
+1. **[Requirement category]:** [Specific requirement] *(Under Review - High Confidence)*
+2. **[Second requirement]:** [Details] *(Under Review - High Confidence)*
+3. **[Third requirement]:** [Details] *(Under Review - High Confidence)*
+
+**Documentation Requirements:**
+
+- **[Doc type required]** - [Details]
+- [Additional documentation needs]
+- [Lab tests, evaluations, etc.]
+
+**Important Notes:**
+
+- [Critical billing or coverage information]
+- [Policy references: LCD L#####, NCD ###.##]
+```
+
+**Prescription Checklist:**
+```markdown
+## Prescription Checklist for Physicians
+
+**Required Elements:**
+- [ ] Patient demographics and insurance ID
+- [ ] HCPCS code: "[CODE] - [Description]"
+- [ ] ICD-10 diagnosis code ([list codes])
+- [ ] [Specific clinical requirement]
+- [ ] [Documentation requirement]
+- [ ] Physician signature and date
+- [ ] Ordering provider NPI number
+
+**For Medicare:**
+- [ ] [Medicare-specific requirements]
+
+**For Medicaid:**
+- [ ] [Medicaid-specific requirements]
+```
+
+**Common Denial Reasons:**
+```markdown
+## Common Denial Reasons
+
+1. **"[Exact denial reason in quotes]"** - [What this means]. Fix: [Specific
+   actionable solution] *(Under Review - High Confidence)*
+
+2. **"[Second denial]"** - [Explanation]. Fix: [Solution] *(Under Review - High Confidence)*
+
+[Continue numbering...]
+```
+
+**Tips for Approval:**
+```markdown
+## Tips for Approval
+
+**Medicare:**
+- [Specific tip] *(Under Review - High Confidence)*
+- [Another tip with details]
+- [Contact info if relevant]
+
+**Medicaid:**
+- [Medicaid-specific tips]
+- [Authorization process details]
+```
+
+**Related Codes:**
+```markdown
+## Related Codes
+
+- **[CODE]** - [Description] - [Relationship to current code]
+- **[CODE]** - [Description] - [When to use instead/in addition]
+```
+
+**References:**
+```markdown
+## References
+
+- Medicare LCD L##### ([MAC name] - Jurisdiction X)
+- Medicare NCD ###.## ([Topic])
+- [State] Medicaid: [Contact info if relevant]
+- Source document: [filename] (lines X-Y)
+```
+
+### Quality Check: Does Your File Meet E0784 Standard?
+
+**Ask yourself:**
+- [ ] Could a physician use this file alone to determine if their patient qualifies?
+- [ ] Are the most common denial reasons documented with solutions?
+- [ ] Could office staff use the checklist to prepare the prescription?
+- [ ] Would this file prevent common billing errors?
+- [ ] Does it answer "when to use this code vs. related codes"?
+- [ ] Are policy references included for verification?
+
+**If you answered NO to any question:** Add more detail to reach E0784 standard.
+
+**Remember:** These files will be the primary reference for busy physicians and facility staff. Comprehensive, actionable guidance prevents denials and improves patient access to needed equipment.
+
+---
+
 ## 🔄 Version Control
 
 This policy may evolve. When updating:
@@ -652,6 +857,7 @@ This policy may evolve. When updating:
 4. Update `HANDOFF_PROMPT.md` with policy changes
 
 **Version History:**
+- **1.4** (2025-10-30): Added E0784 Comprehensive Standard (Gold Standard) section - codifies DM13/E0784.md as the quality benchmark for all files. Distinguishes minimum policy compliance from gold standard for physician utility.
 - **1.3** (2025-10-29): CRITICAL FIX - Tags must be in string values, not YAML comments (comments aren't parsed for HTML)
 - **1.2** (2025-10-29): Added comprehensive narrative Markdown tagging guidance for legal protection
 - **1.1** (2025-10-29): Simplified tagging system - only (Under Review - High Confidence) and (Under Review) inline

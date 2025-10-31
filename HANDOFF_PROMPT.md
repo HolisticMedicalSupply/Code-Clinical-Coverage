@@ -237,6 +237,65 @@ grep "^DM24" /home/user/Code-Clinical-Coverage/ApprovedCategoriesAndCodes.csv
 The first row for each category shows: `BOC_CODE,CATEGORY_NAME,COUNT,"CODE_LIST"`
 - Verify COUNT matches the number of codes listed
 - Use CODE_LIST to ensure you create all required files
+
+---
+
+## ⭐ GOLD STANDARD: E0784 Comprehensive Model
+
+**ALL NEW FILES MUST MEET OR EXCEED THE E0784.md STANDARD**
+
+The file `clinical-coverage-reference/items/DM13/E0784.md` represents the **GOLD STANDARD** for quality and completeness. Before creating any new files, **READ E0784.md** to understand the expected level of detail.
+
+### What E0784 Demonstrates
+
+**1. Complete YAML (Required Minimum):**
+- All required fields present
+- Proper v1.3 tag format (tags in string values)
+- Comprehensive field_notes with source quotes
+- Clear reasoning for all inferences
+
+**2. Comprehensive Narrative (Gold Standard):**
+- ✅ **Clinical Overview** - Detailed explanation with critical coverage notes
+- ✅ **Coverage Details** - Numbered requirements, documentation lists, policy refs (LCD/NCD)
+- ✅ **Prescription Checklist** - Actionable checkbox format for physicians
+- ✅ **Common Denial Reasons** - Specific denials with "Fix:" solutions
+- ✅ **Tips for Approval** - Organized by payer with proactive guidance
+- ✅ **Related Codes** - With descriptions and relationships
+- ✅ **References** - Complete with contact info and source line numbers
+
+### When to Use Gold Standard
+
+**ALWAYS use E0784 level for:**
+- ❗ Items requiring prior authorization
+- ❗ Items with complex clinical criteria (multi-step, lab tests, trials)
+- ❗ Items with high denial rates
+- ❗ Expensive items (>$1000)
+- ❗ Items with strict documentation requirements
+- ❗ Items physicians frequently ask about
+
+**Minimum acceptable for:**
+- ✓ Very simple replacement parts (single footplate, standard battery)
+- ✓ Straightforward "replacement only" items with no other complexity
+- ✓ Items rarely prescribed
+- ✓ Items with minimal source documentation (1-2 lines)
+
+**Rule of Thumb:** If a physician might have questions about coverage, use Gold Standard. **If in doubt, use Gold Standard.**
+
+### Before You Start
+
+1. **Read E0784.md** to understand the comprehensive standard
+2. **Read DATA_INTEGRITY_POLICY.md v1.4** - Section "E0784 Comprehensive Standard" explains the requirements
+3. Use the quality checklist:
+   - [ ] Could a physician use this file alone to determine if patient qualifies?
+   - [ ] Are common denial reasons documented with solutions?
+   - [ ] Could office staff use the checklist to prepare the prescription?
+   - [ ] Would this file prevent common billing errors?
+   - [ ] Does it answer "when to use this code vs. related codes"?
+   - [ ] Are policy references included for verification?
+
+**If you answered NO to any question:** Add more detail to reach E0784 standard.
+
+---
 - Cross-reference with source document to confirm coverage info available
 
 ### 🚨 CRITICAL: Data Integrity and Tagging Requirements
