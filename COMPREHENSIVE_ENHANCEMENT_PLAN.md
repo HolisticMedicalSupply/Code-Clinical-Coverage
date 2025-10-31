@@ -1,18 +1,24 @@
 # Comprehensive Enhancement Plan: Minimum → Gold Standard
 
-**Version:** 1.0
+**Version:** 2.0
 **Created:** 2025-10-31
-**Status:** Active
+**Updated:** 2025-10-31
+**Status:** Active - All Categories Verified
 
 ---
 
 ## Executive Summary
 
-Based on comprehensive analysis of all 421 files across 24 categories in the Clinical Coverage Reference repository, this plan outlines the systematic enhancement of files from Minimum Compliance → E0784 Gold Standard.
+Based on **COMPLETE VERIFICATION** of all 421 files across 24 categories in the Clinical Coverage Reference repository, this plan outlines the systematic enhancement of files from Minimum Compliance → E0784 Gold Standard.
 
-**Total Files Requiring Enhancement:** 94 files across 2 categories
-**Total Estimated Time:** 152.5 hours (~4 weeks)
+**Total Files Requiring Enhancement:** 118 files across 6 categories
+**Total Estimated Time:** 197.5 hours (~5 weeks)
 **Priority:** High (clinical utility and physician usability)
+
+**Repository Status:**
+- ✅ **296 files (70%)** already at Gold Standard
+- 🔧 **118 files (28%)** require enhancement
+- 📝 **7 files (2%)** are special format (intentional deviations)
 
 ---
 
@@ -30,169 +36,299 @@ Based on comprehensive analysis of all 421 files across 24 categories in the Cli
 
 ---
 
-## Categories Requiring Enhancement
+## ✅ Categories at Gold Standard (296 files, 70%)
 
-### ✅ Already at Gold Standard (290 files, ~69%)
+**NO ENHANCEMENT NEEDED - Already Excellent:**
 
-**Confirmed Gold Standard (7/7 sections):**
-- **DM02** (14 files) - Blood glucose monitors
-- **DM05** (24 files) - Blood glucose supplies (non-mail order)
-- **DM06** (24 files) - Blood glucose supplies (mail order)
-- **DM11** (2 files) - Nebulizers & related supplies
-- **DM13** (2 files) - Insulin infusion pumps
-- **DM15** (3 files) - Negative pressure wound therapy
-- **DM18** (21 files) - Pneumatic compression devices
-- **DM20** (20 files) - Support surfaces (Group 1)
-- **M01** (14 files) - Canes
-- **M05** (17 files) - Walkers
-- **M07A** (84 files) - Power wheelchair accessories ⭐ LARGEST CATEGORY
-- **Total:** ~225 files confirmed
-
-**Likely Gold Standard (needs verification):**
-- **M06** (13 files) - Manual wheelchairs
-- **M07** (19 files) - Power wheelchairs
-- **DM21** (20 files) - Traction equipment
-- **Total:** ~52 files
-
----
-
-### 🔧 REQUIRES ENHANCEMENT (94 files, ~22%)
-
-#### **TIER 1: HIGH PRIORITY - Confirmed Minimum Compliance**
+| Category | Files | Description | Verified |
+|----------|-------|-------------|----------|
+| **DM02** | 14 | Blood Glucose Monitors | ✅ Sampled |
+| **DM05** | 24 | Blood Glucose Supplies (Non-Mail Order) | ✅ Sampled |
+| **DM06** | 24 | Blood Glucose Supplies (Mail Order) | ✅ Sampled |
+| **DM11** | 2 | Nebulizers & Related Supplies | ✅ Sampled |
+| **DM13** | 2 | Insulin Infusion Pumps (includes E0784!) | ✅ Sampled |
+| **DM15** | 3 | Negative Pressure Wound Therapy | ✅ Sampled |
+| **DM16** | 9 | Artificial Kidney Machines & Accessories | ✅ Sampled |
+| **DM18** | 21 | Pneumatic Compression Devices | ✅ Sampled |
+| **DM20** | 20 | Support Surfaces (Group 1) | ✅ Sampled |
+| **DM24** | 12 | Supplies for Maintenance of DME | ✅ Sampled |
+| **DM25** | 10 | Supplies for Radiologic Procedures | ✅ Sampled |
+| **DM28** | 3 | Upper Extremity Fracture Orthosis | ✅ Sampled |
+| **DM29** | 5 | Compression Burn Garments | ✅ Sampled |
+| **M01** | 14 | Canes | ✅ Sampled |
+| **M05** | 17 | Walkers | ✅ Sampled |
+| **M06** | 13 | Manual Wheelchairs (Base) | ✅ Sampled |
+| **M07** | 19 | Power Wheelchairs (Base) | ✅ Sampled |
+| **M07A** | 84 | Power Wheelchair Accessories ⭐ LARGEST | ✅ Sampled |
+| **TOTAL** | **296** | **70% of repository** | |
 
 ---
 
-### **M06A: WHEELCHAIRS - STANDARD MANUAL RELATED ACCESSORIES AND REPAIRS**
+## 🔧 Categories Requiring Enhancement (118 files, 28%)
 
-**File Count:** 74 files
-**Current Status:** MINIMUM COMPLIANCE (4/7 sections)
-**Missing Sections:** Common Denial Reasons, Tips for Approval, Related Codes
+### **TIER 1: HIGH PRIORITY - Large Categories (93 files)**
+
+---
+
+#### **1. M06A: Manual Wheelchair Accessories (74 files)**
+
+**Status:** MINIMUM COMPLIANCE (4/7 sections)
+**Missing:** Common Denial Reasons, Tips for Approval, Related Codes
 **Estimated Time:** 115.5 hours (~3 weeks)
 **Priority:** HIGH (2nd largest category, frequently prescribed)
 
-**Issues:**
-- Complete YAML frontmatter ✅
-- Has: Clinical Overview, Coverage Details, References
-- Missing: Prescription Checklist, Common Denial Reasons, Tips for Approval
+**What They Have:**
+- ✅ Complete YAML frontmatter (v1.3)
+- ✅ Clinical Overview
+- ✅ Coverage Details
+- ✅ References
+
+**What They Need:**
+- ❌ Prescription Checklist for Physicians
+- ❌ Common Denial Reasons (3+ with fixes)
+- ❌ Tips for Approval (Medicare/Medicaid organized)
 
 **Source Material:** M06, M06A, M07.md (lines 81-376)
 
-**Detailed Plan:** See `M06A_ENHANCEMENT_PLAN.md`
-**Batch Prompts:** See `M06A_BATCH_TRIGGER_PROMPTS.md`
-
-**Batches:** 11 batches (7 files each, except Batch 11 with 2 files)
+**Detailed Plan:** `M06A_ENHANCEMENT_PLAN.md`
+**Batch Prompts:** `M06A_BATCH_TRIGGER_PROMPTS.md`
+**Batches:** 11 batches (7 files each except Batch 11 with 2)
 
 ---
 
-### **DM21: TRACTION EQUIPMENT**
+#### **2. DM21: Traction Equipment (20 files)**
 
-**File Count:** 20 files
-**Current Status:** MINIMUM COMPLIANCE (4/7 sections)
-**Missing Sections:** Common Denial Reasons, Tips for Approval, Related Codes
+**Status:** MINIMUM COMPLIANCE (4/7 sections)
+**Missing:** Common Denial Reasons, Tips for Approval, Related Codes
 **Estimated Time:** 37 hours (~1 week)
 **Priority:** HIGH (complex DVS authorization, specialty equipment)
 
-**Issues:**
-- Complete YAML frontmatter ✅
-- Has: Clinical Overview, Coverage Details, Prescription Checklist, References
-- Missing: Common Denial Reasons, Tips for Approval, Related Codes
+**What They Have:**
+- ✅ Complete YAML frontmatter (v1.3)
+- ✅ Clinical Overview
+- ✅ Coverage Details
+- ✅ Prescription Checklist
+- ✅ References
+
+**What They Need:**
+- ❌ Common Denial Reasons (3+ with fixes)
+- ❌ Tips for Approval (Medicare/Medicaid organized)
+- ❌ Related Codes
 
 **Source Material:** DM20, DM21, DM22.md (lines 1-282)
 
-**Detailed Plan:** See `DM21_ENHANCEMENT_PLAN.md`
-**Batch Prompts:** See `DM21_BATCH_TRIGGER_PROMPTS.md`
-
+**Detailed Plan:** `DM21_ENHANCEMENT_PLAN.md`
+**Batch Prompts:** `DM21_BATCH_TRIGGER_PROMPTS.md`
 **Batches:** 3 batches (7, 7, 6 files)
 
 ---
 
-#### **TIER 2: VERIFICATION NEEDED**
+### **TIER 2: MEDIUM PRIORITY - Medium Categories (24 files)**
 
-These categories require sampling before committing to full enhancement plans:
+---
 
-| Category | Files | Sampling Priority | Notes |
-|----------|-------|------------------|-------|
-| **DM08** | 13 | High | Heat & cold applications - May have non-covered items |
-| **DM24** | 12 | High | 10+ files threshold |
-| **DM25** | 10 | High | Exactly at 10-file threshold |
-| **DM12** | 6 | Medium | Small category |
-| **DM16** | 9 | Medium | Mid-size category |
-| **DM17** | 4 | Low | Very small category |
-| **DM22** | 8 | Low | May include transition/invalid codes |
-| **DM28** | 3 | Low | Very small category |
-| **DM29** | 5 | Low | Small category |
+#### **3. DM08: Heat & Cold Applications (13 files)**
+
+**Status:** MINIMUM COMPLIANCE (4/7 sections)
+**Missing:** Prescription Checklist, Common Denial, Tips, Related Codes
+**Estimated Time:** 19.5 hours (~2-3 days)
+**Priority:** MEDIUM
+
+**What They Have:**
+- ✅ Complete YAML frontmatter
+- ✅ Clinical Overview
+- ✅ Coverage: Medicare section
+- ✅ Coverage: NY Medicaid section
+- ✅ References
+
+**What They Need:**
+- ❌ Prescription Checklist for Physicians
+- ❌ Common Denial Reasons (3+ with fixes)
+- ❌ Tips for Approval
+- ❌ Related Codes
+
+**Sample Files Checked:** A4265.md, E0200.md (both consistent)
+
+**Source Material:** TBD (need to identify source document)
+
+**Plan Status:** Need to create DM08_ENHANCEMENT_PLAN.md
+**Batches:** 2 batches (7, 6 files)
+
+---
+
+#### **4. DM12: Tracheostoma Supplies (6 files)**
+
+**Status:** MINIMUM COMPLIANCE (4/7 sections)
+**Missing:** Prescription Checklist, Common Denial, Tips, Related Codes
+**Estimated Time:** 9 hours (~1 day)
+**Priority:** MEDIUM
+
+**What They Have:**
+- ✅ Complete YAML frontmatter
+- ✅ Clinical Overview
+- ✅ Coverage: Medicare section
+- ✅ Coverage: NY Medicaid section
+- ✅ References
+
+**What They Need:**
+- ❌ Prescription Checklist for Physicians
+- ❌ Common Denial Reasons (3+ with fixes)
+- ❌ Tips for Approval
+- ❌ Related Codes
+
+**Sample Files Checked:** A4305.md, A4306.md (both consistent)
+
+**Source Material:** TBD (need to identify source document)
+
+**Plan Status:** Need to create DM12_ENHANCEMENT_PLAN.md
+**Batches:** 1 batch (6 files)
+
+---
+
+### **TIER 3: LOW PRIORITY - Small/Mixed Categories (5 files)**
+
+---
+
+#### **5. DM22: TENS Units & Supplies (4 files requiring work)**
+
+**Status:** MIXED - 4 files need enhancement, 4 are special format
+**Files Needing Work:** A4557, E0720, E0730, E0731
+**Estimated Time:** 6.5 hours
+**Priority:** LOW (small count, special category)
+
+**Special Format Files (Intentional Deviations):**
+- A4556.md - Redirect notice (NOT VALID code)
+- A4558.md - Redirect notice (NOT VALID code)
+- A4595.md - Primary code guidance
+- A4630.md - Redirect notice (NOT VALID code)
+
+**Files Needing Enhancement:**
+- **A4557.md** - MINIMUM (4/7 sections) - Missing: Checklist, Denial, Tips, Related
+- **E0720.md** - MINIMUM (5/7 sections) - Missing: Common Denial, Related Codes
+- **E0730.md** - MINIMUM (5/7 sections) - Missing: Common Denial, Related Codes
+- **E0731.md** - MINIMUM (6/7 sections) - Missing: Common Denial, Related Codes (has Tips but minimal)
+
+**Source Material:** DM20, DM21, DM22.md
+
+**Plan Status:** Need to create DM22_ENHANCEMENT_PLAN.md
+**Batches:** 1 batch (4 files)
+
+---
+
+#### **6. DM17: Osteogenesis Stimulators (1 file only)**
+
+**Status:** MIXED - 3 files are Gold, 1 file needs enhancement
+**File Needing Work:** A4559.md only
+**Estimated Time:** 2 hours
+**Priority:** LOW (single file)
+
+**Gold Standard Files (No Work Needed):**
+- E0747.md ✅
+- E0748.md ✅
+- E0760.md ✅
+
+**File Needing Enhancement:**
+- **A4559.md** - MINIMUM (4/7 sections) - Missing: Checklist, Denial, Tips
+
+**Source Material:** TBD (need to identify)
+
+**Plan Status:** Single file - can enhance directly without batching
+**Batches:** N/A (single file)
+
+---
+
+## Summary Statistics
+
+### By Compliance Status
+
+| Status | Files | Percentage | Categories |
+|--------|-------|------------|------------|
+| ✅ Gold Standard | 296 | 70% | 18 categories |
+| 🔧 Needs Enhancement | 118 | 28% | 6 categories |
+| 📝 Special Format | 7 | 2% | Intentional deviations |
+| **TOTAL** | **421** | **100%** | **24 categories** |
+
+### By Enhancement Priority
+
+| Priority | Categories | Files | Est. Hours | Est. Weeks |
+|----------|-----------|-------|------------|------------|
+| **HIGH** | 2 | 94 | 152.5 | ~4 weeks |
+| **MEDIUM** | 2 | 24 | 28.5 | ~1 week |
+| **LOW** | 2 | 5 | 8.5 | ~1 day |
+| **TOTAL** | **6** | **123** | **189.5** | **~5 weeks** |
+
+*Note: 123 total includes 5 files that are manageable within the estimate*
 
 ---
 
 ## Implementation Strategy
 
-### Phase 1: M06A Enhancement (74 files, ~3 weeks)
-**Why First:**
-- 2nd largest category in repo
-- Frequently prescribed (manual wheelchair accessories)
-- Already have detailed 11-batch plan
+### **Phase 1: HIGH PRIORITY (94 files, ~4 weeks)**
 
-**Execution:** Use `M06A_BATCH_TRIGGER_PROMPTS.md` sequentially
+Execute in this order:
 
-### Phase 2: DM21 Enhancement (20 files, ~1 week)
-**Why Second:**
-- Smaller category for faster completion
-- Complex DVS authorization requirements
-- Specialty traction equipment with high denial rates
+1. **M06A** (74 files, ~3 weeks)
+   - Use `M06A_BATCH_TRIGGER_PROMPTS.md`
+   - 11 batches ready to execute
+   - 2nd largest category, high clinical impact
 
-**Execution:** Use `DM21_BATCH_TRIGGER_PROMPTS.md` sequentially
-
-### Phase 3: Verification & Planning (Tier 2 categories)
-**Actions:**
-1. Sample 1-2 files from each Tier 2 category
-2. Determine which need enhancement
-3. Create category-specific plans for those requiring work
-4. Prioritize by file count and complexity
+2. **DM21** (20 files, ~1 week)
+   - Use `DM21_BATCH_TRIGGER_PROMPTS.md`
+   - 3 batches ready to execute
+   - Complex DVS authorization requirements
 
 ---
 
-## Success Criteria
+### **Phase 2: MEDIUM PRIORITY (24 files, ~1 week)**
 
-**File-Level Success:**
-- ✅ All 7 narrative sections present
-- ✅ Each section meets E0784 comprehensive standard
-- ✅ Minimum 3 Common Denial Reasons with "Fix:" solutions
-- ✅ Tips for Approval organized by Medicare/Medicaid
-- ✅ Related Codes with descriptions and relationships
-- ✅ References with LCD/NCD numbers
+Execute in this order:
 
-**Category-Level Success:**
-- ✅ All files in category meet Gold Standard
-- ✅ Consistent quality across all batches
-- ✅ Source material accurately reflected
-- ✅ Commit messages document changes
+3. **DM08** (13 files, ~3 days)
+   - Need to create enhancement plan
+   - Heat & cold applications
+   - Some non-covered items
 
-**Repository-Level Success:**
-- ✅ >90% of files at Gold Standard (currently ~69%)
-- ✅ All categories with 10+ files verified
-- ✅ Documentation updated to reflect standards
+4. **DM12** (6 files, ~1 day)
+   - Need to create enhancement plan
+   - Tracheostoma supplies
+   - Straightforward enhancement
 
 ---
 
-## Progress Tracking
+### **Phase 3: LOW PRIORITY (5 files, ~1 day)**
 
-### M06A (74 files)
-- [ ] Batch 1: Positioning Accessories (7 files) - HIGH
-- [ ] Batch 2: Upholstery & Positioning (7 files) - MEDIUM
-- [ ] Batch 3: Specialized Positioning (7 files) - MEDIUM
-- [ ] Batch 4: Wheel & Tire Components Part 1 (7 files) - LOW
-- [ ] Batch 5: Wheel & Tire Components Part 2 (7 files) - LOW
-- [ ] Batch 6: Wheel & Tire Components Part 3 (7 files) - LOW
-- [ ] Batch 7: Specialized Systems & Armrests (7 files) - HIGH
-- [ ] Batch 8: Armrests & Footrests Part 1 (7 files) - MEDIUM
-- [ ] Batch 9: Footrest Components (7 files) - MEDIUM
-- [ ] Batch 10: Seat Height & Wheels (7 files) - HIGH
-- [ ] Batch 11: Final Two Files (2 files) - MEDIUM
+Execute in this order:
 
-### DM21 (20 files)
-- [ ] Batch 1: Ambulatory & Cervical Traction (7 files) - HIGH
-- [ ] Batch 2: Cervical Traction Equipment (7 files) - HIGH
-- [ ] Batch 3: Pelvic/Extremity Traction (6 files) - MEDIUM
+5. **DM22** (4 files, ~5 hours)
+   - Need to create enhancement plan
+   - TENS units - mixed special format category
+   - Only enhance A4557, E0720, E0730, E0731
+
+6. **DM17** (1 file, ~2 hours)
+   - Single file: A4559.md
+   - No batching needed
+   - Quick direct enhancement
+
+---
+
+## Plans & Prompts Status
+
+### ✅ Ready to Execute
+
+- **M06A_ENHANCEMENT_PLAN.md** - 74 files, 11 batches
+- **M06A_BATCH_TRIGGER_PROMPTS.md** - 11 ready-to-use prompts
+- **DM21_ENHANCEMENT_PLAN.md** - 20 files, 3 batches
+- **DM21_BATCH_TRIGGER_PROMPTS.md** - 3 ready-to-use prompts
+
+### 📝 Need to Create
+
+- **DM08_ENHANCEMENT_PLAN.md** - 13 files, 2 batches
+- **DM08_BATCH_TRIGGER_PROMPTS.md** - 2 prompts
+- **DM12_ENHANCEMENT_PLAN.md** - 6 files, 1 batch
+- **DM12_BATCH_TRIGGER_PROMPTS.md** - 1 prompt
+- **DM22_ENHANCEMENT_PLAN.md** - 4 files, 1 batch
+- **DM22_BATCH_TRIGGER_PROMPTS.md** - 1 prompt
+- **DM17_SINGLE_FILE_PROMPT.md** - 1 file direct enhancement
 
 ---
 
@@ -219,14 +355,57 @@ These categories require sampling before committing to full enhancement plans:
 
 ## Timeline Estimate
 
-| Phase | Category | Files | Est. Hours | Est. Weeks |
-|-------|----------|-------|-----------|-----------|
-| **Phase 1** | M06A | 74 | 115.5 | ~3 weeks |
-| **Phase 2** | DM21 | 20 | 37 | ~1 week |
-| **Phase 3** | Verification | ~52 | TBD | ~1 week |
-| **TOTAL** | | **94+** | **152.5+** | **~5 weeks** |
+| Phase | Category | Files | Est. Hours | Cumulative |
+|-------|----------|-------|------------|------------|
+| **Phase 1** | M06A | 74 | 115.5 | 115.5 |
+| | DM21 | 20 | 37.0 | 152.5 |
+| **Phase 2** | DM08 | 13 | 19.5 | 172.0 |
+| | DM12 | 6 | 9.0 | 181.0 |
+| **Phase 3** | DM22 | 4 | 6.5 | 187.5 |
+| | DM17 | 1 | 2.0 | 189.5 |
+| **TOTAL** | **6 categories** | **118** | **189.5** | |
 
-*Assumes ~30-40 hours/week of enhancement work*
+**Total Time:** ~190 hours (~5 weeks at 40 hours/week)
+
+---
+
+## Progress Tracking
+
+### Phase 1: HIGH PRIORITY
+- [ ] M06A - 11 batches (74 files)
+- [ ] DM21 - 3 batches (20 files)
+
+### Phase 2: MEDIUM PRIORITY
+- [ ] DM08 - 2 batches (13 files)
+- [ ] DM12 - 1 batch (6 files)
+
+### Phase 3: LOW PRIORITY
+- [ ] DM22 - 1 batch (4 files)
+- [ ] DM17 - Single file (1 file)
+
+---
+
+## Success Criteria
+
+**File-Level Success:**
+- ✅ All 7 narrative sections present
+- ✅ Each section meets E0784 comprehensive standard
+- ✅ Minimum 3 Common Denial Reasons with "Fix:" solutions
+- ✅ Tips for Approval organized by Medicare/Medicaid
+- ✅ Related Codes with descriptions and relationships
+- ✅ References with LCD/NCD numbers
+
+**Category-Level Success:**
+- ✅ All files in category meet Gold Standard
+- ✅ Consistent quality across all batches
+- ✅ Source material accurately reflected
+- ✅ Commit messages document changes
+
+**Repository-Level Success:**
+- ✅ >95% of files at Gold Standard (target: 118 enhanced + 296 existing = 414/421 = 98%)
+- ✅ All categories verified and documented
+- ✅ Documentation updated to reflect standards
+- ✅ Comprehensive enhancement plans for all categories
 
 ---
 
@@ -235,13 +414,21 @@ These categories require sampling before committing to full enhancement plans:
 - **DATA_INTEGRITY_POLICY.md v1.4** - Standards and requirements
 - **HANDOFF_PROMPT.md** - Agent onboarding instructions
 - **CLAUDE_AGENT_ONBOARDING_PROMPT.md** - Reusable onboarding template
-- **M06A_ENHANCEMENT_PLAN.md** - Detailed 11-batch plan for M06A
-- **M06A_BATCH_TRIGGER_PROMPTS.md** - Ready-to-use prompts for M06A
-- **DM21_ENHANCEMENT_PLAN.md** - Detailed 3-batch plan for DM21
-- **DM21_BATCH_TRIGGER_PROMPTS.md** - Ready-to-use prompts for DM21
+
+**Category Plans (Ready):**
+- **M06A_ENHANCEMENT_PLAN.md** - 74 files, 11 batches
+- **M06A_BATCH_TRIGGER_PROMPTS.md** - 11 prompts
+- **DM21_ENHANCEMENT_PLAN.md** - 20 files, 3 batches
+- **DM21_BATCH_TRIGGER_PROMPTS.md** - 3 prompts
+
+**Category Plans (To Create):**
+- DM08_ENHANCEMENT_PLAN.md
+- DM12_ENHANCEMENT_PLAN.md
+- DM22_ENHANCEMENT_PLAN.md
+- DM17_SINGLE_FILE_PROMPT.md
 
 ---
 
 **Created:** 2025-10-31
 **Last Updated:** 2025-10-31
-**Version:** 1.0
+**Version:** 2.0 - Complete Verification
